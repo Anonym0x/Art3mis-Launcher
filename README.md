@@ -19,6 +19,8 @@
 
 </div>
 
+> 🇹🇷 **Türkçe için:** [aşağı kaydır ↓](#-türkçe)
+
 ---
 
 ## What is ART3MIS?
