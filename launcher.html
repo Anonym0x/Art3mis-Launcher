@@ -1,0 +1,2097 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ART3MIS Launcher</title>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Orbitron:wght@400;700;900&family=Space+Mono&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#070d1a;--surf:rgba(9,17,34,.92);--surf2:rgba(14,26,52,.76);
+  --brd:rgba(0,210,255,.13);--brd-hi:rgba(0,210,255,.44);
+  --A:#00d4ff;--A2:#ff3060;--A3:#7c2fff;
+  --txt:#ddf0ff;--dim:rgba(130,185,255,.44);
+  --glow:0 0 22px rgba(0,212,255,.26);
+  --card:rgba(7,14,28,.93);--inp:rgba(0,22,52,.66);
+  --ok:#00ffaa;--danger:#ff3060;
+  --modal:rgba(4,8,20,.98);--sh:0 14px 48px rgba(0,0,0,.6);
+}
+.light{
+  /* CYBER LIGHT — açık mavi/beyaz, temiz gündüz */
+  --bg:#e8f4fd;--surf:rgba(255,255,255,.96);--surf2:rgba(220,238,252,.88);
+  --brd:rgba(0,120,200,.16);--brd-hi:rgba(0,120,200,.44);
+  --A:#0077cc;--A2:#cc0044;--A3:#5500aa;
+  --txt:#071828;--dim:rgba(0,60,110,.46);
+  --glow:0 0 16px rgba(0,120,200,.18);
+  --card:rgba(240,250,255,.98);--inp:rgba(200,228,250,.55);
+  --ok:#006636;--danger:#cc0044;
+  --modal:rgba(245,251,255,.99);--sh:0 6px 22px rgba(0,60,120,.12);
+}
+/* ── THEME: TERMINAL ─ Yeşil matrix / terminal estetiği ── */
+.theme-terminal{
+  --bg:#040d04;--surf:rgba(6,16,6,.94);--surf2:rgba(10,24,10,.80);
+  --brd:rgba(0,255,65,.12);--brd-hi:rgba(0,255,65,.42);
+  --A:#00ff41;--A2:#ff8c00;--A3:#00cc33;
+  --txt:#adfcad;--dim:rgba(0,200,60,.44);
+  --glow:0 0 20px rgba(0,255,65,.30);
+  --card:rgba(4,12,4,.95);--inp:rgba(0,22,0,.65);
+  --ok:#00ff41;--danger:#ff4400;
+  --modal:rgba(2,8,2,.99);--sh:0 14px 48px rgba(0,0,0,.75);
+}
+.theme-terminal .logo,.theme-terminal .tab,.theme-terminal .sectit,
+.theme-terminal .sl,.theme-terminal .sv{font-family:'Space Mono',monospace!important;}
+.theme-terminal .pscard,.theme-terminal .srow,.theme-terminal .card,
+.theme-terminal .modal,.theme-terminal .ibtn{border-radius:4px!important;}
+.theme-terminal #particles{filter:hue-rotate(200deg);}
+/* ── THEME: AURORA ─ Mor/yeşil kuzey ışıkları ── */
+.theme-aurora{
+  --bg:#07060f;--surf:rgba(13,9,24,.94);--surf2:rgba(22,12,40,.80);
+  --brd:rgba(168,85,247,.14);--brd-hi:rgba(168,85,247,.46);
+  --A:#a855f7;--A2:#06ffa5;--A3:#f72585;
+  --txt:#e8d0ff;--dim:rgba(168,120,255,.46);
+  --glow:0 0 24px rgba(168,85,247,.34);
+  --card:rgba(8,5,18,.95);--inp:rgba(18,5,40,.65);
+  --ok:#06ffa5;--danger:#f72585;
+  --modal:rgba(4,3,14,.99);--sh:0 14px 48px rgba(0,0,0,.75);
+}
+/* ── THEME: MINIMAL ─ Temiz gri, gürültüsüz ── */
+.theme-minimal{
+  --bg:#0f1117;--surf:rgba(18,21,30,.97);--surf2:rgba(26,30,44,.84);
+  --brd:rgba(130,145,180,.14);--brd-hi:rgba(130,145,180,.36);
+  --A:#8fa3c8;--A2:#c89890;--A3:#6680aa;
+  --txt:#cdd4e0;--dim:rgba(130,145,180,.55);
+  --glow:none;
+  --card:rgba(15,17,26,.96);--inp:rgba(22,26,38,.66);
+  --ok:#7ec97e;--danger:#c97080;
+  --modal:rgba(11,13,20,.99);--sh:0 6px 28px rgba(0,0,0,.55);
+}
+.theme-minimal .ibtn:hover,.theme-minimal .pscard:hover,
+.theme-minimal .addbtn:hover{transform:none!important;}
+/* ── THEME: CYBER ─ Varsayılan, koyu mavi/cyan (ek class gerekmez, :root değerleri) ── */
+
+/* ═══════════════════════════════════════
+   GÜNDÜZ TEMALARı — her karanlık temanın
+   .light karşılığı, eşleştirilmiş çiftler
+═══════════════════════════════════════ */
+
+/* ── CYBER LIGHT ─ Derin lacivert slate, neon aksanlar ── */
+.light{
+  --bg:#141b2d;--surf:rgba(22,30,50,.97);--surf2:rgba(30,42,68,.88);
+  --brd:rgba(0,180,220,.16);--brd-hi:rgba(0,180,220,.44);
+  --A:#00b4d8;--A2:#e63060;--A3:#5c20cc;
+  --txt:#c8e8f8;--dim:rgba(100,160,210,.55);
+  --glow:0 0 18px rgba(0,180,220,.22);
+  --card:rgba(18,26,46,.97);--inp:rgba(0,18,44,.66);
+  --ok:#00d4aa;--danger:#e63060;
+  --modal:rgba(14,22,40,.99);--sh:0 8px 28px rgba(0,0,0,.55);
+}
+/* ── TERMINAL LIGHT ─ PAPER: Krem kağıt, fosforlu yazılar ── */
+.theme-terminal.light{
+  --bg:#f5f0e8;--surf:rgba(250,246,238,.98);--surf2:rgba(238,232,218,.90);
+  --brd:rgba(120,100,50,.16);--brd-hi:rgba(120,100,50,.40);
+  --A:#5a7a20;--A2:#b04010;--A3:#7a6010;
+  --txt:#1a1408;--dim:rgba(80,65,30,.52);
+  --glow:0 0 14px rgba(90,120,32,.16);
+  --card:rgba(248,244,234,.98);--inp:rgba(228,220,200,.55);
+  --ok:#2a6a2a;--danger:#b04010;
+  --modal:rgba(250,247,240,.99);--sh:0 5px 20px rgba(60,40,0,.12);
+}
+.theme-terminal.light .logo,.theme-terminal.light .tab{font-family:'Space Mono',monospace!important;}
+.theme-terminal.light #particles{filter:hue-rotate(80deg) saturate(0.7) brightness(0.9);}
+/* ── AURORA LIGHT ─ BLOSSOM: Lavanta/pembe, bahar açık ── */
+.theme-aurora.light{
+  --bg:#f2eeff;--surf:rgba(255,252,255,.97);--surf2:rgba(238,228,252,.88);
+  --brd:rgba(140,80,200,.16);--brd-hi:rgba(140,80,200,.42);
+  --A:#8833cc;--A2:#cc2277;--A3:#5522aa;
+  --txt:#1a0830;--dim:rgba(100,50,160,.50);
+  --glow:0 0 16px rgba(136,51,204,.18);
+  --card:rgba(248,244,255,.98);--inp:rgba(224,210,248,.55);
+  --ok:#227744;--danger:#cc2277;
+  --modal:rgba(250,247,255,.99);--sh:0 6px 22px rgba(80,0,120,.12);
+}
+/* ── MINIMAL LIGHT ─ PEBBLE: Krem/gri, temiz ve nötr ── */
+.theme-minimal.light{
+  --bg:#f0ede8;--surf:rgba(255,253,250,.97);--surf2:rgba(240,236,230,.88);
+  --brd:rgba(100,90,80,.14);--brd-hi:rgba(100,90,80,.34);
+  --A:#556677;--A2:#885544;--A3:#446655;
+  --txt:#1a1510;--dim:rgba(80,70,60,.50);
+  --glow:none;
+  --card:rgba(248,246,242,.98);--inp:rgba(228,224,216,.55);
+  --ok:#336633;--danger:#885544;
+  --modal:rgba(252,250,248,.99);--sh:0 4px 16px rgba(40,30,20,.10);
+}
+.theme-minimal.light .ibtn:hover,.theme-minimal.light .pscard:hover,
+.theme-minimal.light .addbtn:hover{transform:none!important;}
+*{margin:0;padding:0;box-sizing:border-box;}
+html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(--txt);
+  font-family:'Rajdhani',sans-serif;transition:background .4s,color .4s;user-select:none;}
+
+#particles{position:fixed;inset:0;z-index:3;pointer-events:none;}
+#bgimg{position:fixed;inset:0;z-index:1;background-size:cover;background-position:center;opacity:0;transition:opacity .5s;}
+#bgdim{position:fixed;inset:0;z-index:2;background:var(--bg);opacity:.80;pointer-events:none;transition:opacity .3s,background .4s;}
+#app{position:relative;z-index:4;height:100vh;display:flex;flex-direction:column;}
+
+/* HEADER */
+header{display:flex;align-items:center;justify-content:space-between;padding:12px 28px;
+  background:var(--surf);border-bottom:1px solid var(--brd);backdrop-filter:blur(24px);flex-shrink:0;}
+.logo{font-family:'Orbitron',monospace;font-size:1.35rem;font-weight:900;letter-spacing:.16em;
+  background:linear-gradient(135deg,var(--A),var(--A3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.logo em{-webkit-text-fill-color:var(--A2);font-style:normal;}
+.hdr-r{display:flex;align-items:center;gap:7px;}
+.ibtn{width:36px;height:36px;border-radius:8px;border:1px solid var(--brd);background:var(--surf2);
+  color:var(--A);display:flex;align-items:center;justify-content:center;cursor:pointer;
+  font-size:.95rem;transition:all .2s;backdrop-filter:blur(10px);}
+.ibtn:hover{border-color:var(--A);box-shadow:var(--glow);transform:translateY(-1px);}
+.ibtn.on{background:rgba(0,212,255,.14);border-color:var(--A);}
+.lang-btn{min-width:36px;padding:0 9px;font-family:'Space Mono',monospace;font-size:.6rem;font-weight:700;}
+.sdot{width:8px;height:8px;border-radius:50%;background:var(--dim);transition:background .3s;flex-shrink:0;}
+.sdot.ok{background:var(--ok);box-shadow:0 0 8px var(--ok);}
+.sdot.err{background:var(--danger);box-shadow:0 0 8px var(--danger);}
+.slbl{font-family:'Space Mono',monospace;font-size:.55rem;color:var(--dim);}
+
+/* STATS */
+.sbar{display:flex;gap:16px;flex-wrap:wrap;padding:7px 28px;background:var(--surf);
+  border-bottom:1px solid var(--brd);backdrop-filter:blur(24px);flex-shrink:0;}
+.stat{display:flex;align-items:center;gap:6px;}
+.sl{font-family:'Space Mono',monospace;font-size:.55rem;color:var(--dim);text-transform:uppercase;letter-spacing:.1em;}
+.sv{font-family:'Orbitron',monospace;font-size:.76rem;font-weight:700;color:var(--A);}
+.ssep{width:1px;height:14px;background:var(--brd);}
+
+/* TABS */
+.tabs{display:flex;padding:0 28px;background:var(--surf);border-bottom:1px solid var(--brd);
+  backdrop-filter:blur(24px);flex-shrink:0;overflow-x:auto;}
+.tab{padding:10px 18px;font-family:'Orbitron',monospace;font-size:.65rem;font-weight:700;
+  letter-spacing:.1em;color:var(--dim);cursor:pointer;border-bottom:2px solid transparent;
+  transition:all .22s;display:flex;align-items:center;gap:6px;white-space:nowrap;}
+.tab:hover{color:var(--txt);}
+.tab.on{color:var(--A);border-bottom-color:var(--A);}
+.tcnt{background:rgba(0,212,255,.1);border:1px solid var(--brd);border-radius:20px;
+  padding:1px 6px;font-size:.56rem;color:var(--A);}
+
+/* CONTENT */
+.content{flex:1;overflow-y:auto;padding:22px 28px;}
+.panel{display:none;animation:fu .28s ease;}
+.panel.on{display:block;}
+@keyframes fu{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+
+/* SECTION HEADER */
+.sechdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;}
+.sectit{font-family:'Orbitron',monospace;font-size:.85rem;font-weight:700;
+  letter-spacing:.1em;display:flex;align-items:center;gap:8px;}
+.sectit::before{content:'';display:inline-block;width:3px;height:16px;
+  background:linear-gradient(to bottom,var(--A),var(--A3));border-radius:2px;}
+.addbtn{display:flex;align-items:center;gap:6px;padding:7px 14px;
+  background:linear-gradient(135deg,rgba(0,212,255,.11),rgba(124,47,255,.11));
+  border:1px solid var(--brd-hi);border-radius:8px;color:var(--A);
+  font-family:'Orbitron',monospace;font-size:.62rem;font-weight:700;
+  letter-spacing:.07em;cursor:pointer;transition:all .22s;}
+.addbtn:hover{background:linear-gradient(135deg,rgba(0,212,255,.22),rgba(124,47,255,.22));
+  box-shadow:var(--glow);transform:translateY(-1px);}
+
+/* SEARCH */
+.srchwrap{position:relative;margin-bottom:16px;}
+.srch{width:100%;padding:9px 14px 9px 38px;background:var(--card);border:1px solid var(--brd);
+  border-radius:10px;color:var(--txt);font-family:'Rajdhani',sans-serif;font-size:.93rem;
+  outline:none;transition:border-color .18s;}
+.srch:focus{border-color:var(--A);box-shadow:var(--glow);}
+.srch::placeholder{color:var(--dim);}
+.srchico{position:absolute;left:11px;top:50%;transform:translateY(-50%);color:var(--dim);font-size:.88rem;pointer-events:none;}
+
+/* GRIDS */
+.grid{display:grid;gap:13px;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));}
+
+/* GAME CARD */
+.card{background:var(--card);border:1px solid var(--brd);border-radius:13px;overflow:hidden;
+  cursor:pointer;position:relative;backdrop-filter:blur(12px);
+  transition:border-color .26s,box-shadow .26s,transform .26s cubic-bezier(.4,0,.2,1);}
+.card:hover{border-color:var(--A);box-shadow:var(--glow),0 16px 38px rgba(0,0,0,.45);transform:translateY(-4px);}
+.cph{width:100%;aspect-ratio:3/4;display:flex;align-items:center;justify-content:center;
+  font-size:2.8rem;background:linear-gradient(135deg,rgba(0,212,255,.04),rgba(124,47,255,.09));}
+.cinfo{padding:10px 12px;}
+.cname{font-size:.93rem;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:2px;}
+.cmeta{font-family:'Space Mono',monospace;font-size:.57rem;color:var(--dim);}
+.cacts{position:absolute;top:6px;right:6px;display:flex;gap:4px;opacity:0;transition:opacity .18s;}
+.card:hover .cacts,.scard:hover .cacts{opacity:1;}
+.ca{width:26px;height:26px;background:rgba(3,8,18,.88);border:1px solid rgba(255,255,255,.12);
+  border-radius:6px;display:flex;align-items:center;justify-content:center;cursor:pointer;
+  font-size:.72rem;backdrop-filter:blur(6px);transition:all .16s;}
+.ca:hover{border-color:var(--danger);color:var(--danger);}
+.ca.play:hover{border-color:var(--ok);color:var(--ok);}
+.ca.edit:hover{border-color:var(--A);color:var(--A);}
+
+/* SHORTCUT CARD */
+.scard{background:var(--card);border:1px solid var(--brd);border-radius:13px;overflow:hidden;
+  cursor:pointer;position:relative;backdrop-filter:blur(12px);
+  transition:border-color .26s,box-shadow .26s,transform .26s cubic-bezier(.4,0,.2,1);}
+.scard:hover{transform:translateY(-4px);}
+.sph{aspect-ratio:1;display:flex;align-items:center;justify-content:center;font-size:2.4rem;}
+.scinfo{padding:9px 11px;}
+.scname{font-size:.9rem;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.scpath{font-family:'Space Mono',monospace;font-size:.55rem;color:var(--dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:2px;}
+
+/* EMPTY */
+.empty{display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:60px 20px;gap:11px;color:var(--dim);text-align:center;}
+.emico{font-size:3.2rem;opacity:.3;}
+.emtit{font-family:'Orbitron',monospace;font-size:.88rem;font-weight:700;letter-spacing:.1em;}
+.emsub{font-size:.82rem;max-width:260px;line-height:1.6;}
+
+/* ══════════════════════════════════════
+   FILE MANAGER
+══════════════════════════════════════ */
+#fm-wrap{display:flex;flex-direction:column;height:calc(100vh - 168px);}
+#fm-toolbar{display:flex;align-items:center;gap:8px;padding:8px 0 10px;flex-shrink:0;}
+.fm-nav{width:32px;height:32px;border:1px solid var(--brd);background:var(--surf2);border-radius:7px;
+  display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:.82rem;
+  color:var(--A);transition:all .16s;flex-shrink:0;}
+.fm-nav:hover:not(.dis){border-color:var(--A);box-shadow:var(--glow);}
+.fm-nav.dis{opacity:.28;pointer-events:none;}
+#fm-path{flex:1;padding:7px 12px;background:var(--inp);border:1px solid var(--brd);border-radius:8px;
+  color:var(--txt);font-family:'Space Mono',monospace;font-size:.68rem;outline:none;
+  transition:border-color .16s;}
+#fm-path:focus{border-color:var(--A);}
+.fm-go{padding:0 12px;height:32px;background:var(--surf2);border:1px solid var(--brd);border-radius:7px;
+  color:var(--A);cursor:pointer;font-size:.7rem;font-weight:700;transition:all .16s;flex-shrink:0;}
+.fm-go:hover{border-color:var(--A);}
+#fm-body{display:flex;flex:1;gap:0;overflow:hidden;border:1px solid var(--brd);border-radius:12px;background:var(--card);}
+/* LEFT SIDEBAR */
+#fm-sidebar{width:160px;flex-shrink:0;border-right:1px solid var(--brd);padding:10px 0;overflow-y:auto;}
+.fm-sidebar-sec{padding:5px 12px 3px;font-family:'Space Mono',monospace;font-size:.52rem;
+  font-weight:700;letter-spacing:.12em;color:var(--dim);text-transform:uppercase;}
+.fm-side-item{display:flex;align-items:center;gap:8px;padding:7px 12px;cursor:pointer;
+  font-size:.82rem;font-weight:600;transition:background .14s;border-radius:0;}
+.fm-side-item:hover{background:rgba(0,212,255,.07);}
+.fm-side-item.on{background:rgba(0,212,255,.12);color:var(--A);}
+/* MAIN LIST */
+#fm-main{flex:1;overflow:hidden;display:flex;flex-direction:column;}
+#fm-list-head{display:grid;grid-template-columns:2fr .7fr 1.1fr 1fr;gap:0;
+  padding:8px 12px;background:rgba(0,212,255,.04);border-bottom:1px solid var(--brd);
+  flex-shrink:0;}
+.fm-th{font-family:'Space Mono',monospace;font-size:.56rem;font-weight:700;
+  letter-spacing:.1em;color:var(--dim);text-transform:uppercase;cursor:pointer;
+  display:flex;align-items:center;gap:4px;user-select:none;}
+.fm-th:hover{color:var(--A);}
+.fm-th.sort-asc::after{content:'↑';color:var(--A);}
+.fm-th.sort-desc::after{content:'↓';color:var(--A);}
+#fm-list{flex:1;overflow-y:auto;}
+.fm-row{display:grid;grid-template-columns:2fr .7fr 1.1fr 1fr;gap:0;padding:7px 12px;
+  border-bottom:1px solid rgba(0,212,255,.05);cursor:pointer;transition:background .12s;
+  align-items:center;}
+.fm-row:hover{background:rgba(0,212,255,.06);}
+.fm-row.sel{background:rgba(0,212,255,.12);}
+.fm-row.dir .fm-name{color:var(--txt);}
+.fm-name{display:flex;align-items:center;gap:8px;font-size:.84rem;font-weight:600;
+  overflow:hidden;min-width:0;}
+.fm-name-txt{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.fm-name-ico{font-size:1rem;flex-shrink:0;}
+.fm-cell{font-family:'Space Mono',monospace;font-size:.6rem;color:var(--dim);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+#fm-status{padding:5px 12px;border-top:1px solid var(--brd);font-family:'Space Mono',monospace;
+  font-size:.57rem;color:var(--dim);flex-shrink:0;display:flex;gap:14px;}
+#fm-loading{display:flex;align-items:center;justify-content:center;padding:40px;
+  color:var(--dim);font-size:.82rem;flex-direction:column;gap:8px;}
+
+/* SETTINGS */
+.ss{margin-bottom:26px;}
+.sslbl{font-family:'Orbitron',monospace;font-size:.63rem;font-weight:700;
+  letter-spacing:.12em;color:var(--dim);text-transform:uppercase;
+  margin-bottom:11px;padding-bottom:6px;border-bottom:1px solid var(--brd);
+  display:flex;align-items:center;gap:7px;}
+.sslbl::before{content:'';width:3px;height:14px;background:linear-gradient(to bottom,var(--A),var(--A3));
+  border-radius:2px;display:inline-block;flex-shrink:0;}
+.srow{display:flex;align-items:center;justify-content:space-between;padding:11px 14px;
+  background:var(--card);border:1px solid var(--brd);border-radius:10px;margin-bottom:7px;}
+.sname{font-size:.93rem;font-weight:600;margin-bottom:2px;}
+.sdesc{font-size:.73rem;color:var(--dim);}
+.tog{width:42px;height:22px;background:var(--brd);border-radius:11px;position:relative;
+  cursor:pointer;transition:background .26s;flex-shrink:0;}
+.tog.on{background:var(--A);}
+.tog::after{content:'';position:absolute;width:16px;height:16px;background:#fff;border-radius:50%;
+  top:3px;left:3px;transition:left .26s;box-shadow:0 2px 4px rgba(0,0,0,.3);}
+.tog.on::after{left:23px;}
+.bgbox{width:100%;height:90px;border-radius:10px;border:1px solid var(--brd);background:var(--inp);
+  display:flex;align-items:center;justify-content:center;color:var(--dim);font-size:.8rem;
+  margin-bottom:9px;overflow:hidden;}
+.bgacts{display:flex;gap:7px;margin-bottom:11px;}
+.obtn{flex:1;padding:8px;background:transparent;border:1px solid var(--brd);border-radius:8px;
+  color:var(--txt);font-family:'Rajdhani',sans-serif;font-size:.83rem;font-weight:600;
+  cursor:pointer;transition:all .18s;text-align:center;}
+.obtn:hover{border-color:var(--A);color:var(--A);}
+.obtn.d:hover{border-color:var(--danger);color:var(--danger);}
+/* Playlist item */
+.pl-item{display:flex;align-items:center;gap:9px;padding:10px 13px;
+  background:var(--card);border:1px solid var(--brd);border-radius:10px;margin-bottom:7px;}
+.pl-src{font-size:1.1rem;flex-shrink:0;}
+.pl-info{flex:1;min-width:0;}
+.pl-name{font-size:.88rem;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.pl-url{font-family:'Space Mono',monospace;font-size:.56rem;color:var(--dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.pl-acts{display:flex;gap:5px;flex-shrink:0;}
+.pl-btn{width:26px;height:26px;border-radius:6px;border:1px solid var(--brd);background:var(--surf2);
+  display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:.7rem;
+  color:var(--dim);transition:all .16s;}
+.pl-btn:hover{border-color:var(--A);color:var(--A);}
+.pl-btn.d:hover{border-color:var(--danger);color:var(--danger);}
+.pl-active{border-color:var(--ok)!important;background:rgba(0,255,170,.06)!important;}
+.pl-active .pl-name::before{content:'▶ ';color:var(--ok);font-size:.72rem;}
+
+/* MODALS */
+.ov{position:fixed;inset:0;z-index:1000;background:rgba(0,0,0,.72);
+  backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;
+  opacity:0;pointer-events:none;transition:opacity .26s;}
+.ov.open{opacity:1;pointer-events:all;}
+.modal{background:var(--modal);border:1px solid var(--brd-hi);border-radius:17px;
+  padding:24px 26px;width:100%;max-width:480px;
+  box-shadow:0 40px 80px rgba(0,0,0,.65),var(--glow);
+  transform:scale(.93) translateY(17px);transition:transform .26s cubic-bezier(.4,0,.2,1);
+  position:relative;max-height:90vh;overflow-y:auto;}
+.ov.open .modal{transform:scale(1) translateY(0);}
+.mtit{font-family:'Orbitron',monospace;font-size:.92rem;font-weight:700;letter-spacing:.1em;
+  color:var(--A);margin-bottom:18px;display:flex;align-items:center;gap:8px;}
+.mclose{position:absolute;top:14px;right:14px;width:28px;height:28px;background:var(--surf2);
+  border:1px solid var(--brd);border-radius:7px;display:flex;align-items:center;justify-content:center;
+  cursor:pointer;color:var(--dim);transition:all .16s;}
+.mclose:hover{color:var(--danger);border-color:var(--danger);}
+.fg{margin-bottom:13px;}
+.fl{display:block;font-family:'Space Mono',monospace;font-size:.57rem;font-weight:700;
+  letter-spacing:.12em;text-transform:uppercase;color:var(--dim);margin-bottom:4px;}
+.fi{width:100%;padding:9px 12px;background:var(--inp);border:1px solid var(--brd);
+  border-radius:8px;color:var(--txt);font-family:'Rajdhani',sans-serif;font-size:.93rem;
+  outline:none;transition:border-color .16s;}
+.fi:focus{border-color:var(--A);box-shadow:0 0 0 3px rgba(0,212,255,.08);}
+.fi::placeholder{color:var(--dim);}
+.frow{display:flex;gap:8px;} .frow .fg{flex:1;}
+.fta{resize:vertical;min-height:60px;}
+.prow{display:flex;gap:6px;align-items:flex-end;} .prow .fi{flex:1;}
+.pbtn{padding:0 12px;background:var(--surf2);border:1px solid var(--brd);border-radius:8px;
+  color:var(--A);cursor:pointer;font-size:.8rem;white-space:nowrap;flex-shrink:0;
+  height:38px;display:flex;align-items:center;gap:5px;transition:all .16s;font-weight:600;}
+.pbtn:hover{border-color:var(--A);background:rgba(0,212,255,.12);}
+.pbtn-loading{opacity:.6;pointer-events:none;}
+.btnp{width:100%;padding:11px;background:linear-gradient(135deg,var(--A),var(--A3));
+  border:none;border-radius:10px;color:#fff;font-family:'Orbitron',monospace;font-size:.71rem;
+  font-weight:700;letter-spacing:.1em;cursor:pointer;transition:all .22s;margin-top:5px;}
+.btnp:hover{opacity:.9;transform:translateY(-1px);box-shadow:var(--glow);}
+.imgprev{width:100%;height:85px;object-fit:cover;border-radius:8px;border:1px solid var(--brd);
+  margin-bottom:7px;display:none;}
+.edit-badge{display:inline-block;padding:2px 7px;background:rgba(0,212,255,.12);
+  border:1px solid var(--brd);border-radius:20px;font-family:'Space Mono',monospace;
+  font-size:.56rem;color:var(--A);margin-left:7px;vertical-align:middle;}
+
+/* LAUNCH */
+#lv{position:fixed;inset:0;z-index:5000;
+  background:radial-gradient(circle at center,rgba(0,212,255,.04) 0%,rgba(0,0,0,.96) 70%);
+  display:flex;align-items:center;justify-content:center;flex-direction:column;gap:15px;
+  opacity:0;pointer-events:none;transition:opacity .26s;}
+#lv.show{opacity:1;pointer-events:all;}
+.lvtit{font-family:'Orbitron',monospace;font-size:1.35rem;font-weight:900;
+  color:var(--A);letter-spacing:.22em;text-shadow:var(--glow);}
+.lvname{font-family:'Space Mono',monospace;font-size:.65rem;color:var(--dim);
+  letter-spacing:.12em;max-width:400px;text-align:center;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.lvbar{width:240px;height:2px;background:rgba(0,212,255,.1);border-radius:2px;overflow:hidden;}
+.lvprog{height:100%;background:linear-gradient(to right,var(--A),var(--A3));width:0;border-radius:2px;}
+@keyframes prog{from{width:0}to{width:100%}}
+
+/* CTX MENU */
+#ctx{position:fixed;z-index:2000;background:var(--modal);border:1px solid var(--brd);
+  border-radius:10px;padding:5px;min-width:168px;box-shadow:var(--sh);display:none;}
+.ci{padding:8px 12px;border-radius:6px;font-size:.86rem;font-weight:600;
+  cursor:pointer;display:flex;align-items:center;gap:8px;transition:background .13s;}
+.ci:hover{background:var(--surf2);}
+.ci.d{color:var(--danger);}
+.csep{height:1px;background:var(--brd);margin:4px 0;}
+
+/* NOTIFY */
+#ntf{position:fixed;bottom:20px;right:20px;z-index:9000;display:flex;flex-direction:column;gap:7px;}
+.notif{padding:9px 16px;background:var(--card);border:1px solid var(--brd);border-radius:10px;
+  font-size:.83rem;font-weight:600;backdrop-filter:blur(16px);box-shadow:var(--sh);
+  animation:sli .26s ease,fout .32s ease 2.68s forwards;display:flex;align-items:center;gap:7px;}
+.notif.ok{border-color:var(--ok);color:var(--ok);}
+.notif.err{border-color:var(--danger);color:var(--danger);}
+.notif.info{border-color:var(--A);color:var(--A);}
+@keyframes sli{from{opacity:0;transform:translateX(24px)}to{opacity:1;transform:none}}
+@keyframes fout{to{opacity:0;transform:translateX(24px)}}
+
+/* PSTYLE GRID */
+.pstyle-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:4px;}
+.pscard{padding:9px 11px;background:var(--card);border:1.5px solid var(--brd);border-radius:9px;
+  cursor:pointer;transition:all .2s;text-align:center;}
+.pscard:hover{border-color:var(--A);transform:translateY(-1px);}
+.pscard.active{border-color:var(--A);background:rgba(0,212,255,.08);}
+.pscard .ps-icon{font-size:1.3rem;margin-bottom:3px;}
+.pscard .ps-name{font-family:'Orbitron',monospace;font-size:.58rem;font-weight:700;color:var(--txt);}
+.pscard .ps-desc{font-size:.65rem;color:var(--dim);margin-top:2px;line-height:1.3;}
+
+/* UI THEME CARDS */
+.theme-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:4px;}
+.thcard{padding:10px 11px;background:var(--card);border:1.5px solid var(--brd);border-radius:9px;
+  cursor:pointer;transition:all .2s;text-align:center;position:relative;overflow:hidden;}
+.thcard:hover{border-color:var(--A);transform:translateY(-1px);}
+.thcard.active{border-color:var(--A);background:rgba(0,212,255,.08);}
+.thcard.active::after{content:'✓';position:absolute;top:5px;right:7px;font-size:.65rem;color:var(--A);}
+.thcard .th-swatch{width:100%;height:22px;border-radius:5px;margin-bottom:5px;border:1px solid rgba(255,255,255,.06);}
+.thcard .th-name{font-family:'Orbitron',monospace;font-size:.58rem;font-weight:700;color:var(--txt);}
+.thcard .th-desc{font-size:.62rem;color:var(--dim);margin-top:2px;}
+
+/* MUSIC WIDGET */
+#mp-widget{position:fixed;bottom:20px;left:20px;z-index:8500;
+  width:320px;background:var(--surf);border:1px solid var(--brd);
+  border-radius:15px;backdrop-filter:blur(24px);box-shadow:0 8px 32px rgba(0,0,0,.5);
+  transition:opacity .3s,transform .3s;}
+#mp-widget.hidden{opacity:0;pointer-events:none;transform:translateY(12px);}
+#mp-header{display:flex;align-items:center;gap:7px;padding:9px 12px;cursor:pointer;
+  border-bottom:1px solid var(--brd);}
+#mp-source-icon{font-size:1rem;flex-shrink:0;}
+#mp-title-lbl{font-family:'Orbitron',monospace;font-size:.56rem;font-weight:700;
+  letter-spacing:.1em;color:var(--A);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+#mp-badge{font-size:.5rem;font-family:'Space Mono',monospace;color:var(--dim);
+  background:rgba(0,212,255,.08);border:1px solid var(--brd);border-radius:10px;padding:1px 6px;flex-shrink:0;}
+.mp-acts{display:flex;gap:4px;flex-shrink:0;}
+.mp-btn{width:22px;height:22px;border-radius:6px;border:1px solid var(--brd);
+  background:var(--surf2);color:var(--dim);display:flex;align-items:center;
+  justify-content:center;cursor:pointer;font-size:.65rem;transition:all .16s;}
+.mp-btn:hover{border-color:var(--A);color:var(--A);}
+.mp-btn.danger:hover{border-color:var(--danger);color:var(--danger);}
+#mp-iframe-wrap{overflow:hidden;transition:height .3s ease;}
+#mp-iframe-wrap.open-sc{height:160px;}
+#mp-iframe-wrap.open-sp{height:160px;}
+#mp-iframe-wrap.open-yt{height:195px;}
+#mp-iframe-wrap.closed{height:0;}
+#mp-iframe{width:100%;height:100%;border:none;display:block;}
+/* YouTube error overlay */
+#yt-err{position:absolute;inset:0;background:rgba(7,14,28,.92);
+  display:none;flex-direction:column;align-items:center;justify-content:center;
+  gap:8px;border-radius:0 0 10px 10px;padding:16px;}
+#yt-err.show{display:flex;}
+.yt-err-ico{font-size:1.8rem;}
+.yt-err-msg{font-family:'Space Mono',monospace;font-size:.6rem;color:var(--dim);text-align:center;line-height:1.5;}
+.yt-err-open{padding:7px 16px;background:transparent;border:1px solid var(--brd-hi);
+  border-radius:7px;color:var(--A);font-family:'Orbitron',monospace;font-size:.6rem;
+  font-weight:700;cursor:pointer;transition:all .18s;letter-spacing:.06em;}
+.yt-err-open:hover{background:rgba(0,212,255,.12);box-shadow:var(--glow);}
+/* Playlist bar in player */
+#mp-pl-bar{display:flex;align-items:center;gap:6px;padding:6px 10px;border-top:1px solid var(--brd);
+  font-family:'Space Mono',monospace;font-size:.54rem;color:var(--dim);}
+#mp-pl-bar.hidden{display:none;}
+#mp-show-btn{position:fixed;bottom:20px;left:20px;z-index:8500;
+  width:40px;height:40px;border-radius:11px;background:var(--surf);
+  border:1px solid var(--brd);display:flex;align-items:center;justify-content:center;
+  cursor:pointer;font-size:1.1rem;backdrop-filter:blur(16px);
+  box-shadow:0 4px 16px rgba(0,0,0,.4);transition:all .2s;}
+#mp-show-btn:hover{border-color:var(--A);box-shadow:var(--glow);}
+
+/* Local music player */
+
+/* Source switcher */
+.src-grid{display:flex;gap:7px;margin-bottom:9px;}
+.src-card{flex:1;padding:8px 9px;background:var(--card);border:1.5px solid var(--brd);
+  border-radius:9px;cursor:pointer;text-align:center;transition:all .2s;}
+.src-card:hover{border-color:var(--A);}
+.src-card.on{border-color:var(--A);background:rgba(0,212,255,.08);}
+
+::-webkit-scrollbar{width:4px;}
+::-webkit-scrollbar-thumb{background:rgba(0,212,255,.15);border-radius:3px;}
+@media(max-width:600px){
+  header,.sbar,.tabs,.content{padding-left:14px;padding-right:14px;}
+  .grid{grid-template-columns:repeat(auto-fill,minmax(135px,1fr));gap:10px;}
+  #fm-sidebar{display:none;}
+}
+</style>
+</head>
+<body>
+<canvas id="particles"></canvas>
+<div id="bgimg"></div>
+<div id="bgdim"></div>
+
+<div id="app">
+  <header>
+    <div class="logo">ART<em>3</em>MIS</div>
+    <div class="hdr-r">
+      <div style="display:flex;align-items:center;gap:5px" title="Python server">
+        <div class="sdot" id="sdot"></div>
+        <span class="slbl" id="slbl"></span>
+      </div>
+      <div class="ibtn lang-btn" id="langbtn" onclick="toggleLang()">TR</div>
+      <div class="ibtn" id="sbtn" onclick="toggleSearch()">🔍</div>
+      <div class="ibtn" id="tbtn" onclick="toggleTheme()">🌙</div>
+      <div class="ibtn" onclick="showTab('settings')">⚙️</div>
+    </div>
+  </header>
+
+  <div class="sbar">
+    <div class="stat"><span class="sl" data-t="games"></span><span class="sv" id="stg">0</span></div>
+    <div class="ssep"></div>
+    <div class="stat"><span class="sl" data-t="shortcuts"></span><span class="sv" id="sts">0</span></div>
+    <div class="ssep"></div>
+    <div class="stat"><span class="sl">SERVER</span><span class="sv" style="font-size:.62rem;color:var(--A3)">:7842</span></div>
+  </div>
+
+  <div class="tabs">
+    <div class="tab on" id="tab-games"     onclick="showTab('games')">🎮 <span data-t="tabGames"></span> <span class="tcnt" id="cg">0</span></div>
+    <!-- FILE MANAGER TAB: GEÇİCİ OLARAK GİZLENDİ
+         Neden: Python server /list-folder ve /drives endpoint'leri mevcut (server.py ~100.satır)
+         ancak cross-origin/bağlantı sorunu 'endpoint yok' hatasına neden oluyor.
+         Tüm dosya yöneticisi kodu (fmNavigate, fmLoadDrives, fmRender vb.) korunmaktadır.
+         Düzeltildiğinde: style='display:none' kaldır ve normal kullanıma al. -->
+    <div class="tab" id="tab-files" onclick="showTab('files')" style="display:none">📁 <span data-t="tabFiles"></span></div>
+    <div class="tab"   id="tab-shortcuts"  onclick="showTab('shortcuts')">⚡ <span data-t="tabShortcuts"></span> <span class="tcnt" id="cs">0</span></div>
+    <div class="tab"   id="tab-settings"   onclick="showTab('settings')">⚙️ <span data-t="tabSettings"></span></div>
+  </div>
+
+  <div class="content">
+
+    <!-- ── GAMES ── -->
+    <div class="panel on" id="panel-games">
+      <div class="srchwrap" id="sw-games" style="display:none">
+        <span class="srchico">🔍</span>
+        <input class="srch" id="q-games" oninput="filter('games',this.value)">
+      </div>
+      <div class="sechdr">
+        <div class="sectit" data-t="gameLib"></div>
+        <button class="addbtn" onclick="openModal('game')">＋ <span data-t="addGame"></span></button>
+      </div>
+      <div class="grid" id="grid-games"></div>
+      <div class="empty" id="em-games" style="display:none">
+        <div class="emico">🎮</div>
+        <div class="emtit" data-t="noGames"></div>
+        <div class="emsub" data-t="noGamesSub"></div>
+      </div>
+    </div>
+
+    <!-- ── FILE MANAGER ── -->
+    <div class="panel" id="panel-files" style="padding:0;">
+      <div style="padding:16px 28px 0;" id="fm-wrap">
+        <div id="fm-toolbar">
+          <div class="fm-nav dis" id="fm-back" onclick="fmBack()" title="Geri">←</div>
+          <div class="fm-nav dis" id="fm-fwd"  onclick="fmFwd()"  title="İleri">→</div>
+          <div class="fm-nav"     id="fm-up"   onclick="fmUp()"   title="Üst Klasör">↑</div>
+          <input id="fm-path" type="text" spellcheck="false">
+          <div class="fm-go" onclick="fmGo()">↵</div>
+          <div class="fm-nav" onclick="fmRefresh()" title="Yenile" style="font-size:.75rem">↻</div>
+        </div>
+        <div id="fm-body">
+          <div id="fm-sidebar">
+            <div class="fm-sidebar-sec" data-t="drives"></div>
+            <div id="fm-drives"></div>
+            <div class="fm-sidebar-sec" data-t="quickAccess" style="margin-top:8px;"></div>
+            <div id="fm-quick"></div>
+          </div>
+          <div id="fm-main">
+            <div id="fm-list-head">
+              <div class="fm-th" onclick="fmSort('name')" id="fmh-name" data-t="fmName">Ad</div>
+              <div class="fm-th" onclick="fmSort('size')" id="fmh-size" data-t="fmSize">Boyut</div>
+              <div class="fm-th" onclick="fmSort('created')" id="fmh-created" data-t="fmCreated">Oluşturulma</div>
+              <div class="fm-th" id="fmh-type" data-t="fmType">Tür</div>
+            </div>
+            <div id="fm-list"></div>
+            <div id="fm-status">
+              <span id="fm-count"></span>
+              <span id="fm-sel-info"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── SHORTCUTS ── -->
+    <div class="panel" id="panel-shortcuts">
+      <div class="srchwrap" id="sw-shortcuts" style="display:none">
+        <span class="srchico">🔍</span>
+        <input class="srch" id="q-shortcuts" oninput="filter('shortcuts',this.value)">
+      </div>
+      <div class="sechdr">
+        <div class="sectit" data-t="shortcutPanel"></div>
+        <button class="addbtn" onclick="openModal('shortcut')">＋ <span data-t="addShortcut"></span></button>
+      </div>
+      <div class="grid" id="grid-shortcuts"></div>
+      <div class="empty" id="em-shortcuts" style="display:none">
+        <div class="emico">⚡</div>
+        <div class="emtit" data-t="noShortcuts"></div>
+        <div class="emsub" data-t="noShortcutsSub"></div>
+      </div>
+    </div>
+
+    <!-- ── SETTINGS ── -->
+    <div class="panel" id="panel-settings">
+
+      <!-- 1. GÖRÜNÜM -->
+      <div class="ss">
+        <div class="sslbl" data-t="catAppearance"></div>
+
+        <!-- Arayüz Teması — gece/gündüz çiftleri -->
+        <div style="padding:11px 14px;background:var(--card);border:1px solid var(--brd);border-radius:10px;margin-bottom:7px;">
+          <div class="sname" style="margin-bottom:4px;">🎨 <span data-t="uiTheme"></span></div>
+          <div style="font-family:'Space Mono',monospace;font-size:.54rem;color:var(--dim);margin-bottom:9px;" data-t="uiThemeHint"></div>
+          <div class="theme-grid">
+
+            <div class="thcard active" id="th-cyber" onclick="setUITheme('cyber')">
+              <div style="display:flex;gap:3px;margin-bottom:5px;">
+                <div style="flex:1;height:18px;border-radius:4px 0 0 4px;background:linear-gradient(120deg,#070d1a,#00d4ff44)"></div>
+                <div style="flex:1;height:18px;border-radius:0 4px 4px 0;background:linear-gradient(120deg,#141b2d,#00b4d866)"></div>
+              </div>
+              <div class="th-name">CYBER</div>
+              <div class="th-desc">Uzay mavisi ↔ Lacivert</div>
+            </div>
+
+            <div class="thcard" id="th-terminal" onclick="setUITheme('terminal')">
+              <div style="display:flex;gap:3px;margin-bottom:5px;">
+                <div style="flex:1;height:18px;border-radius:4px 0 0 4px;background:linear-gradient(120deg,#040d04,#00ff4144)"></div>
+                <div style="flex:1;height:18px;border-radius:0 4px 4px 0;background:linear-gradient(120deg,#1a160e,#c8a84066)"></div>
+              </div>
+              <div class="th-name">TERMINAL</div>
+              <div class="th-desc">Matrix ↔ Sepia</div>
+            </div>
+
+            <div class="thcard" id="th-aurora" onclick="setUITheme('aurora')">
+              <div style="display:flex;gap:3px;margin-bottom:5px;">
+                <div style="flex:1;height:18px;border-radius:4px 0 0 4px;background:linear-gradient(120deg,#07060f,#a855f744)"></div>
+                <div style="flex:1;height:18px;border-radius:0 4px 4px 0;background:linear-gradient(120deg,#0e0818,#c060f066)"></div>
+              </div>
+              <div class="th-name">AURORA</div>
+              <div class="th-desc">Kozmik ↔ Kadife</div>
+            </div>
+
+            <div class="thcard" id="th-minimal" onclick="setUITheme('minimal')">
+              <div style="display:flex;gap:3px;margin-bottom:5px;">
+                <div style="flex:1;height:18px;border-radius:4px 0 0 4px;background:linear-gradient(120deg,#0f1117,#8fa3c844)"></div>
+                <div style="flex:1;height:18px;border-radius:0 4px 4px 0;background:linear-gradient(120deg,#1a1816,#b0987866)"></div>
+              </div>
+              <div class="th-name">MINIMAL</div>
+              <div class="th-desc">Slate ↔ Stone</div>
+            </div>
+
+          </div>
+          <div style="display:flex;align-items:center;justify-content:center;gap:8px;margin-top:10px;padding-top:9px;border-top:1px solid var(--brd);">
+            <span style="font-family:'Space Mono',monospace;font-size:.56rem;color:var(--dim);" data-t="nightMode"></span>
+            <div class="tog on" id="t-dark" onclick="toggleTheme()" style="flex-shrink:0"></div>
+          </div>
+        </div>
+
+        <!-- Parçacıklar -->
+        <div class="srow">
+          <div><div class="sname" data-t="particles"></div><div class="sdesc" data-t="particlesDesc"></div></div>
+          <div class="tog on" id="t-part" onclick="toggleParticles()"></div>
+        </div>
+        <div class="srow">
+          <div><div class="sname" data-t="particleCount"></div><div class="sdesc" data-t="particleCountDesc"></div></div>
+          <div style="display:flex;align-items:center;gap:8px">
+            <span id="pclbl" style="font-family:'Space Mono',monospace;font-size:.63rem;color:var(--A)">80</span>
+            <input type="range" min="20" max="200" value="80" id="pcslider"
+              oninput="setPC(+this.value)" style="width:95px;accent-color:var(--A)">
+          </div>
+        </div>
+
+        <!-- Particles Mouse Takibi -->
+        <div class="srow">
+          <div>
+            <div class="sname" data-t="particlesMouse"></div>
+            <div class="sdesc" data-t="particlesMouseDesc"></div>
+          </div>
+          <div class="tog on" id="t-pmouse" onclick="toggleParticleMouse()"></div>
+        </div>
+
+        <!-- Particles Stili -->
+        <div style="padding:11px 14px;background:var(--card);border:1px solid var(--brd);border-radius:10px;margin-bottom:7px;">
+          <div class="sname" style="margin-bottom:9px;">✨ <span data-t="particleStyle"></span></div>
+          <div class="pstyle-grid">
+            <div class="pscard active" id="ps-stardust" onclick="setParticleStyle('stardust')">
+              <div class="ps-icon">🌟</div><div class="ps-name">STARDUST</div>
+              <div class="ps-desc">Renkli parlayan düğümler</div>
+            </div>
+            <div class="pscard" id="ps-milkyway" onclick="setParticleStyle('milkyway')">
+              <div class="ps-icon">🌌</div><div class="ps-name">MILKY WAY</div>
+              <div class="ps-desc">3D galaksi simülasyonu</div>
+            </div>
+            <div class="pscard" id="ps-classic" onclick="setParticleStyle('classic')">
+              <div class="ps-icon">🔵</div><div class="ps-name">CLASSIC</div>
+              <div class="ps-desc">Bağlantılı nodes / mouse takibi</div>
+            </div>
+            <div class="pscard" id="ps-fireflies" onclick="setParticleStyle('fireflies')">
+              <div class="ps-icon">🟡</div><div class="ps-name">FIREFLIES</div>
+              <div class="ps-desc">Yüzen ışık orbs</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. ARKAPLAN -->
+      <div class="ss">
+        <div class="sslbl" data-t="catBackground"></div>
+        <div class="bgbox" id="bgbox"></div>
+        <div class="bgacts">
+          <label class="obtn" style="cursor:pointer">
+            📂 <span data-t="pickFile"></span>
+            <input type="file" accept="image/*" style="display:none" onchange="pickBgFile(this)">
+          </label>
+          <button class="obtn d" onclick="clearBg()">🗑 <span data-t="remove"></span></button>
+        </div>
+        <div class="fg">
+          <label class="fl" data-t="bgUrl"></label>
+          <div style="display:flex;gap:7px">
+            <input class="fi" id="bgurl" placeholder="https://…">
+            <button class="pbtn" onclick="setBgUrl()" data-t="apply"></button>
+          </div>
+        </div>
+        <div class="fg">
+          <label class="fl"><span data-t="dimming"></span> (<span id="oplbl">80</span>%)</label>
+          <input type="range" min="0" max="97" value="80" id="opslider"
+            oninput="setOpacity(+this.value)" style="width:100%;accent-color:var(--A);margin-top:3px">
+        </div>
+      </div>
+
+      <!-- 3. MÜZİK ÇALAR -->
+      <div class="ss">
+        <div class="sslbl">🎵 <span data-t="catMusic"></span></div>
+
+        <!-- Playlist seçeneği -->
+        <div class="srow">
+          <div><div class="sname" data-t="autoRotate"></div><div class="sdesc" data-t="autoRotateDesc"></div></div>
+          <div class="tog on" id="t-autorot" onclick="toggleAutoRotate()"></div>
+        </div>
+        <div class="srow">
+          <div><div class="sname" data-t="loopTrack"></div><div class="sdesc" data-t="loopTrackDesc"></div></div>
+          <div class="tog" id="t-loop" onclick="toggleLoop()"></div>
+        </div>
+        <!-- Playlist listesi -->
+        <div class="fg">
+          <label class="fl" data-t="playlist"></label>
+          <div id="pl-list"></div>
+          <button class="addbtn" style="width:100%;justify-content:center;margin-top:5px" onclick="openModal('playlist')">＋ <span data-t="addToPlaylist"></span></button>
+        </div>
+      </div>
+
+      <!-- 4. SUNUCU -->
+      <div class="ss">
+        <div class="sslbl" data-t="catServer"></div>
+        <div class="srow">
+          <div>
+            <div class="sname" data-t="serverStatus"></div>
+            <div class="sdesc" id="srv-desc">localhost:7842</div>
+          </div>
+          <button class="obtn" style="padding:6px 12px;font-size:.78rem;flex:unset" onclick="pingServer()" data-t="ping"></button>
+        </div>
+      </div>
+
+      <!-- 5. VERİ -->
+      <div class="ss">
+        <div class="sslbl" data-t="catData"></div>
+        <div class="srow">
+          <div><div class="sname" data-t="export"></div><div class="sdesc" data-t="exportDesc"></div></div>
+          <button class="obtn" style="padding:6px 12px;font-size:.78rem;flex:unset" onclick="exportData()">↓ Export</button>
+        </div>
+        <div class="srow">
+          <div><div class="sname" data-t="import"></div><div class="sdesc" data-t="importDesc"></div></div>
+          <label class="obtn" style="padding:6px 12px;font-size:.78rem;flex:unset;cursor:pointer;text-align:center">
+            ↑ Import<input type="file" accept=".json" style="display:none" onchange="importData(this)">
+          </label>
+        </div>
+        <div class="srow">
+          <div><div class="sname" data-t="clearAll"></div><div class="sdesc" data-t="clearAllDesc"></div></div>
+          <button class="obtn d" style="padding:6px 12px;font-size:.78rem;flex:unset" onclick="clearAll()" data-t="reset"></button>
+        </div>
+      </div>
+    </div><!-- /settings -->
+
+  </div><!-- /content -->
+</div><!-- /app -->
+
+<!-- ══════ MODALS ══════ -->
+
+<!-- GAME -->
+<div class="ov" id="ov-game">
+  <div class="modal">
+    <div class="mtit">🎮 <span id="gmodal-title"></span><span class="edit-badge" id="gmodal-badge" style="display:none" data-t="editing"></span></div>
+    <button class="mclose" onclick="closeModal('game')">✕</button>
+    <img id="gprev" class="imgprev" src="" alt="">
+    <div class="fg"><label class="fl" data-t="gameName"></label><input class="fi" id="gname" data-ph="gameName_ph"></div>
+    <div class="fg">
+      <label class="fl" data-t="exePath"></label>
+      <div class="prow">
+        <input class="fi" id="gpath" data-ph="exePath_ph">
+        <button class="pbtn" id="gpath-btn" onclick="browseFile('gpath')">📂 <span data-t="browse"></span></button>
+      </div>
+    </div>
+    <div class="frow">
+      <div class="fg"><label class="fl" data-t="genre"></label><input class="fi" id="ggenre" data-ph="genre_ph"></div>
+      <div class="fg"><label class="fl" data-t="year"></label><input class="fi" id="gyear" placeholder="2024" maxlength="4"></div>
+    </div>
+    <div class="fg">
+      <label class="fl" data-t="coverImage"></label>
+      <div class="prow">
+        <input class="fi" id="gimg" data-ph="imageUrl_ph" oninput="previewImg('gimg','gprev')">
+        <button class="pbtn" onclick="pickImageFile()">🖼 <span data-t="browse"></span></button>
+      </div>
+    </div>
+    <div class="fg"><label class="fl" data-t="iconEmoji"></label><input class="fi" id="gicon" placeholder="🎮" maxlength="4"></div>
+    <button class="btnp" id="gbtn" onclick="saveGame()"></button>
+  </div>
+</div>
+
+<!-- SHORTCUT -->
+<div class="ov" id="ov-shortcut">
+  <div class="modal">
+    <div class="mtit">⚡ <span id="smodal-title"></span><span class="edit-badge" id="smodal-badge" style="display:none" data-t="editing"></span></div>
+    <button class="mclose" onclick="closeModal('shortcut')">✕</button>
+    <div class="fg"><label class="fl" data-t="appName"></label><input class="fi" id="sname" data-ph="appName_ph"></div>
+    <div class="fg">
+      <label class="fl" data-t="filePath"></label>
+      <div class="prow">
+        <input class="fi" id="spath" data-ph="filePath_ph">
+        <button class="pbtn" id="spath-btn" onclick="browseFile('spath')">📂 <span data-t="browse"></span></button>
+      </div>
+    </div>
+    <div class="fg"><label class="fl" data-t="iconEmoji"></label><input class="fi" id="sicon" placeholder="⚡" maxlength="4"></div>
+    <div class="fg">
+      <label class="fl" data-t="color"></label>
+      <select class="fi" id="scolor">
+        <option value="#00d4ff">⬤ Cyan</option>
+        <option value="#ff3060">⬤ Red</option>
+        <option value="#7c2fff">⬤ Purple</option>
+        <option value="#00ffaa">⬤ Green</option>
+        <option value="#ff8c00">⬤ Orange</option>
+        <option value="#ff69b4">⬤ Pink</option>
+      </select>
+    </div>
+    <div class="fg">
+      <label class="fl" data-t="note"></label>
+      <textarea class="fi fta" id="snote"></textarea>
+    </div>
+    <button class="btnp" id="sbtn2" onclick="saveShortcut()"></button>
+  </div>
+</div>
+
+<!-- PLAYLIST ADD/EDIT -->
+<div class="ov" id="ov-playlist">
+  <div class="modal">
+    <div class="mtit">🎵 <span id="plmodal-title"></span><span class="edit-badge" id="plmodal-badge" style="display:none" data-t="editing"></span></div>
+    <button class="mclose" onclick="closeModal('playlist')">✕</button>
+    <div class="fg"><label class="fl" data-t="trackName"></label><input class="fi" id="plname" placeholder="NF, Lo-fi…"></div>
+    <div class="fg">
+      <label class="fl" data-t="source"></label>
+      <div class="src-grid" style="flex-wrap:wrap;">
+        <div class="src-card" id="plsrc-sp" onclick="plSetSrc('spotify')">
+          <div style="font-size:1rem">🎧</div>
+          <div style="font-family:'Orbitron',monospace;font-size:.55rem;font-weight:700;color:var(--dim);margin-top:2px;">SPOTIFY</div>
+        </div>
+        <div class="src-card" id="plsrc-sc" onclick="plSetSrc('soundcloud')">
+          <div style="font-size:1rem">☁️</div>
+          <div style="font-family:'Orbitron',monospace;font-size:.55rem;font-weight:700;color:var(--dim);margin-top:2px;">SOUNDCLOUD</div>
+        </div>
+        <div class="src-card" id="plsrc-yt" onclick="plSetSrc('youtube')">
+          <div style="font-size:1rem">▶️</div>
+          <div style="font-family:'Orbitron',monospace;font-size:.55rem;font-weight:700;color:var(--dim);margin-top:2px;">YOUTUBE</div>
+        </div>
+
+      </div>
+    </div>
+    <!-- URL field for online sources -->
+    <div class="fg">
+      <label class="fl" data-t="url"></label>
+      <input class="fi" id="plurl" placeholder="https://open.spotify.com/playlist/… veya soundcloud.com/…">
+    </div>
+
+    <div id="plurl-hint" style="font-size:.7rem;color:var(--dim);margin-top:-8px;margin-bottom:12px;line-height:1.5;"></div>
+    <button class="btnp" id="plbtn" onclick="savePlaylistItem()"></button>
+  </div>
+</div>
+
+<!-- "SAVE AS SHORTCUT" mini modal -->
+<div class="ov" id="ov-qsc">
+  <div class="modal" style="max-width:360px;">
+    <div class="mtit">⚡ <span data-t="saveAsShortcut"></span></div>
+    <button class="mclose" onclick="closeModal('qsc')">✕</button>
+    <div class="fg"><label class="fl" data-t="shortcutName"></label><input class="fi" id="qsc-name"></div>
+    <div class="fg"><label class="fl" data-t="iconEmoji"></label><input class="fi" id="qsc-icon" maxlength="4" placeholder="📁"></div>
+    <div class="fg">
+      <label class="fl" data-t="color"></label>
+      <select class="fi" id="qsc-color">
+        <option value="#00d4ff">⬤ Cyan</option>
+        <option value="#ff3060">⬤ Red</option>
+        <option value="#7c2fff">⬤ Purple</option>
+        <option value="#00ffaa">⬤ Green</option>
+        <option value="#ff8c00">⬤ Orange</option>
+      </select>
+    </div>
+    <button class="btnp" onclick="confirmQuickShortcut()" data-t="addShortcut"></button>
+  </div>
+</div>
+
+<!-- LAUNCH -->
+<div id="lv">
+  <div class="lvtit">LAUNCHING</div>
+  <div class="lvname" id="lvname"></div>
+  <div class="lvbar"><div class="lvprog" id="lvprog"></div></div>
+</div>
+
+<!-- CTX -->
+<div id="ctx">
+  <div class="ci" id="ctx-open"   onclick="ctxDo('open')">▶ <span data-t="ctxOpen"></span></div>
+  <div class="ci" id="ctx-sc"     onclick="ctxDo('sc')">⚡ <span data-t="ctxSaveShortcut"></span></div>
+  <div class="ci" id="ctx-edit"   onclick="ctxDo('edit')">✏️ <span data-t="ctxEdit"></span></div>
+  <div class="ci" id="ctx-copy"   onclick="ctxDo('copy')">📋 <span data-t="ctxCopyPath"></span></div>
+  <div class="csep"></div>
+  <div class="ci d"               onclick="ctxDo('del')">🗑 <span data-t="ctxDel"></span></div>
+</div>
+
+<div id="ntf"></div>
+
+<!-- MUSIC WIDGET -->
+<div id="mp-widget" class="hidden">
+  <div id="mp-header" onclick="mpToggleExpand()">
+    <span id="mp-source-icon">☁️</span>
+    <span id="mp-title-lbl">Music</span>
+    <span id="mp-badge">idle</span>
+    <div class="mp-acts" onclick="event.stopPropagation()">
+      <div class="mp-btn" onclick="mpPrev()" title="Önceki">⏮</div>
+      <div class="mp-btn" onclick="mpNext()" title="Sonraki">⏭</div>
+      <div class="mp-btn danger" onclick="mpHide()" title="Kapat">✕</div>
+    </div>
+  </div>
+  <div id="mp-iframe-wrap" class="closed" style="position:relative;">
+    <iframe id="mp-iframe" allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write *; picture-in-picture *" allowfullscreen sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-popups-to-escape-sandbox allow-presentation"
+      onload="window.ytCheckErr&&ytCheckErr(this)"></iframe>
+    <div id="yt-err">
+      <div class="yt-err-ico">🚫</div>
+      <div class="yt-err-msg" id="yt-err-txt">Bu video gömülü oynatılamıyor.<br>YouTube kısıtlaması (Hata 153).</div>
+      <button class="yt-err-open" id="yt-err-btn" onclick="ytOpenOrig()">YouTube'da Aç ↗</button>
+    </div>
+  </div>
+
+  <div id="mp-pl-bar">
+    <span id="mp-pl-info"></span>
+  </div>
+</div>
+<div id="mp-show-btn" onclick="mpShow()" title="Müzik Çalar">🎵</div>
+
+<script>
+'use strict';
+/* ════════════════════════════════════
+   CONSOLE UYARI NOTU
+   ─────────────────────────────────────
+   "autoplay" / "encrypted-media" uyarıları: Tarayıcı Permissions Policy bildirimleri.
+   İşlevselliği ETKİLEMEZ — sadece bilgilendirme amaçlı.
+
+   SoundCloud/Spotify CORS hataları: Bu embed player'ların kendi API çağrılarından
+   geliyor, ART3MIS'in kodundan değil. Spotify'ın gabo-receiver-service çağrıları
+   tarayıcının CORS politikasına takılıyor — işlevselliği etkilemiyor.
+
+   window.controllers: Firefox'ta kullanımdan kalkmış bir API, yok sayın.
+════════════════════════════════════ */
+
+/* ════════════════════════════════════
+   TRANSLATIONS
+════════════════════════════════════ */
+const LANG={
+  tr:{
+    games:'OYUNLAR',shortcuts:'KISAYOLLAR',
+    tabGames:'Oyunlar',tabFiles:'Dosyalar',tabShortcuts:'Kısayollar',tabSettings:'Ayarlar',
+    gameLib:'Oyun Kütüphanesi',addGame:'Oyun Ekle',
+    shortcutPanel:'Hızlı Kısayollar',addShortcut:'Kısayol Ekle',
+    noGames:'Oyun Yok',noGamesSub:'"Oyun Ekle" ile kütüphane oluşturun.',
+    noShortcuts:'Kısayol Yok',noShortcutsSub:'Dosya yöneticisinden veya manuel kısayol ekleyin.',
+    catAppearance:'🎨 Görünüm',catBackground:'🖼 Arkaplan',catMusic:'Müzik Oynatıcı',
+    catServer:'🔌 Python Server',catData:'💾 Veri Yönetimi',
+    nightMode:'Gece Modu',nightModeDesc:'Koyu renk teması',
+    particles:'Parçacık Efekti',particlesDesc:'Animasyonlu arka plan',
+    uiTheme:'Tema Çifti',uiThemeDesc:'Renk şeması ve görsel stil',
+    uiThemeHint:'Sol = gece ● Sağ = gündüz versiyonu',
+    particlesMouse:'Parçacıklar Mouse Takibi',
+    particlesMouseDesc:'Mouse hareketi parçacıkları etkiler',
+    particleCount:'Parçacık Sayısı',particleCountDesc:'Daha fazla = daha yoğun',
+    particleStyle:'Parçacık Stili',
+    pickFile:'Dosyadan Seç',remove:'Kaldır',bgUrl:'URL ile Arkaplan',apply:'Uygula',dimming:'Karartma',
+    autoRotate:'Otomatik Geçiş',autoRotateDesc:'Çalma listesi sıradaki şarkıya geçer',
+    loopTrack:'Döngü',loopTrackDesc:'Geçerli şarkıyı tekrarla',
+    playlist:'Çalma Listesi',addToPlaylist:'Parça Ekle',
+    trackName:'Parça Adı *',source:'Kaynak',url:'URL *',
+    addPlaylistBtn:'Ekle',editPlaylistBtn:'Kaydet',
+    serverStatus:'Bağlantı',ping:'Ping',
+    export:'Dışa Aktar',exportDesc:'JSON olarak kaydet',
+    import:'İçe Aktar',importDesc:'JSON dosyasından yükle',
+    clearAll:'Tüm Veriyi Sil',clearAllDesc:'Oyunlar, kısayollar ve ayarlar',reset:'Sıfırla',
+    gameName:'Oyun Adı *',gameName_ph:'örn. Cyberpunk 2077',
+    exePath:'Exe Yolu',exePath_ph:'Göz At →',
+    genre:'Tür',genre_ph:'RPG, FPS…',year:'Yıl',
+    coverImage:'Kapak (URL)',imageUrl_ph:'https://…',iconEmoji:'İkon Emoji',
+    appName:'Uygulama Adı *',appName_ph:'örn. Discord',
+    filePath:'Yol *',filePath_ph:'Göz At →',
+    color:'Renk',browse:'Göz At',note:'Not',
+    addGameBtn:'Oyunu Ekle',editGameBtn:'Kaydet',
+    addShortcutBtn:'Kısayol Ekle',editShortcutBtn:'Kaydet',
+    editing:'Düzenleniyor',
+    ctxOpen:'Aç / Başlat',ctxEdit:'Düzenle',ctxDel:'Sil',
+    ctxSaveShortcut:'Kısayol Olarak Kaydet',ctxCopyPath:'Yolu Kopyala',
+    saveAsShortcut:'Kısayol Olarak Kaydet',shortcutName:'Kısayol Adı',
+    serverRunning:'bağlı',serverDown:'kapalı',serverConnecting:'bağlanıyor…',
+    serverOk:'localhost:7842 — bağlı',serverErr:'localhost:7842 — server.py çalıştırın!',
+    launched:'açıldı!',error:'Hata',serverClosed:'Server kapalı! server.py çalıştırın.',
+    added:'eklendi!',saved:'kaydedildi!',deleted:'silindi',required:'zorunlu!',
+    pathRequired:'Ad ve yol zorunlu!',confirmClear:'Tüm veriler silinecek. Emin misiniz?',
+    exported:'Veri dışa aktarıldı!',imported:'Veri içe aktarıldı!',invalidFile:'Geçersiz dosya!',
+    bgUpdated:'Arkaplan güncellendi!',bgCleared:'Arkaplan kaldırıldı',
+    copiedPath:'Yol kopyalandı!',
+    searchPlaceholder_games:'Oyun ara…',searchPlaceholder_shortcuts:'Kısayol ara…',
+    drives:'Sürücüler',quickAccess:'Hızlı Erişim',
+    fmName:'Ad',fmSize:'Boyut',fmCreated:'Oluşturulma',fmType:'Tür',
+    spHint:'Çalma listesi, albüm, şarkı veya artist URL\'si. intl-tr linkleri de desteklenir.',
+
+    scHint:'Profil, çalma listesi veya şarkı URL\'si (örn. soundcloud.com/user/sets/playlist)',
+    ytHint:'Video veya çalma listesi URL\'si (örn. youtube.com/playlist?list=...)',
+  },
+  en:{
+    games:'GAMES',shortcuts:'SHORTCUTS',
+    tabGames:'Games',tabFiles:'Files',tabShortcuts:'Shortcuts',tabSettings:'Settings',
+    gameLib:'Game Library',addGame:'Add Game',
+    shortcutPanel:'Quick Shortcuts',addShortcut:'Add Shortcut',
+    noGames:'No Games',noGamesSub:'Add your first game with "Add Game".',
+    noShortcuts:'No Shortcuts',noShortcutsSub:'Add shortcuts from file manager or manually.',
+    catAppearance:'🎨 Appearance',catBackground:'🖼 Background',catMusic:'Music Player',
+    catServer:'🔌 Python Server',catData:'💾 Data Management',
+    nightMode:'Night Mode',nightModeDesc:'Dark color theme',
+    particles:'Particle Effect',particlesDesc:'Animated background',
+    uiTheme:'Theme Pair',uiThemeDesc:'Color scheme and visual style',
+    uiThemeHint:'Left = night ● Right = day version',
+    particlesMouse:'Particles Follow Mouse',
+    particlesMouseDesc:'Particles react and interact with mouse movement',
+    particleCount:'Particle Count',particleCountDesc:'More = denser effect',
+    particleStyle:'Particle Style',
+    pickFile:'Choose File',remove:'Remove',bgUrl:'Background via URL',apply:'Apply',dimming:'Dimming',
+    autoRotate:'Auto Rotate',autoRotateDesc:'Playlist advances to next track automatically',
+    loopTrack:'Loop',loopTrackDesc:'Repeat current track',
+    playlist:'Playlist',addToPlaylist:'Add Track',
+    trackName:'Track Name *',source:'Source',url:'URL *',
+    addPlaylistBtn:'Add',editPlaylistBtn:'Save',
+    serverStatus:'Connection',ping:'Ping',
+    export:'Export',exportDesc:'Save as JSON',
+    import:'Import',importDesc:'Load from JSON file',
+    clearAll:'Clear All Data',clearAllDesc:'Games, shortcuts and settings',reset:'Reset',
+    gameName:'Game Name *',gameName_ph:'e.g. Cyberpunk 2077',
+    exePath:'Executable Path',exePath_ph:'Use Browse →',
+    genre:'Genre',genre_ph:'RPG, FPS…',year:'Year',
+    coverImage:'Cover (URL)',imageUrl_ph:'https://…',iconEmoji:'Icon Emoji',
+    appName:'App Name *',appName_ph:'e.g. Discord',
+    filePath:'Path *',filePath_ph:'Use Browse →',
+    color:'Color',browse:'Browse',note:'Note',
+    addGameBtn:'Add Game',editGameBtn:'Save',
+    addShortcutBtn:'Add Shortcut',editShortcutBtn:'Save',
+    editing:'Editing',
+    ctxOpen:'Open / Launch',ctxEdit:'Edit',ctxDel:'Delete',
+    ctxSaveShortcut:'Save as Shortcut',ctxCopyPath:'Copy Path',
+    saveAsShortcut:'Save as Shortcut',shortcutName:'Shortcut Name',
+    serverRunning:'connected',serverDown:'offline',serverConnecting:'connecting…',
+    serverOk:'localhost:7842 — connected',serverErr:'localhost:7842 — run server.py!',
+    launched:'launched!',error:'Error',serverClosed:'Server offline! Run server.py.',
+    added:'added!',saved:'saved!',deleted:'deleted',required:'required!',
+    pathRequired:'Name and path are required!',confirmClear:'All data will be deleted. Are you sure?',
+    exported:'Data exported!',imported:'Data imported!',invalidFile:'Invalid file!',
+    bgUpdated:'Background updated!',bgCleared:'Background removed',
+    copiedPath:'Path copied!',
+    searchPlaceholder_games:'Search games…',searchPlaceholder_shortcuts:'Search shortcuts…',
+    drives:'Drives',quickAccess:'Quick Access',
+    fmName:'Name',fmSize:'Size',fmCreated:'Created',fmType:'Type',
+    spHint:'Playlist, album, track or artist URL. intl-XX locale links supported.',
+
+    scHint:'Profile, playlist or track URL (e.g. soundcloud.com/user/sets/playlist)',
+    ytHint:'Video or playlist URL (e.g. youtube.com/playlist?list=...)',
+  }
+};
+
+/* ════════════════════════════════════
+   PARTICLES — multi-mode
+════════════════════════════════════ */
+(function(){
+  const cv=document.getElementById('particles');
+  const cx=cv.getContext('2d');
+  let W,H,nodes=[],mouse={x:-9999,y:-9999},animId,running=false,tick=0;
+  let MODE='stardust';
+  function resize(){W=cv.width=innerWidth;H=cv.height=innerHeight;}
+  const isLight=()=>document.body.classList.contains('light');
+  const SD_DARK=[[255,80,180],[130,80,255],[80,200,255],[255,210,60],[80,255,180],[255,120,60],[200,80,255],[60,230,230]];
+  const SD_LIGHT=[[200,30,140],[90,30,210],[0,140,210],[200,140,0],[0,160,110],[200,80,20],[140,30,210],[0,160,180]];
+  function mkStardust(){const pal=isLight()?SD_LIGHT:SD_DARK;const a=Math.random()*Math.PI*2,sp=.15+Math.random()*.38;return{x:Math.random()*W,y:Math.random()*H,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp,r:.6+Math.random()*1.6,al:.4+Math.random()*.55,col:[...(pal[Math.floor(Math.random()*pal.length)])],phase:Math.random()*Math.PI*2,spd:.018+Math.random()*.025,spike:Math.random()<.18};}
+  function drawSpike(x,y,r,alpha,rgb){cx.save();cx.globalAlpha=alpha;cx.strokeStyle=`rgb(${rgb[0]},${rgb[1]},${rgb[2]})`;cx.lineWidth=r*.55;cx.lineCap='round';const L=r*2.8,D=L*.6;cx.beginPath();cx.moveTo(x-L,y);cx.lineTo(x+L,y);cx.stroke();cx.beginPath();cx.moveTo(x,y-L);cx.lineTo(x,y+L);cx.stroke();cx.lineWidth=r*.3;cx.beginPath();cx.moveTo(x-D,y-D);cx.lineTo(x+D,y+D);cx.stroke();cx.beginPath();cx.moveTo(x+D,y-D);cx.lineTo(x-D,y+D);cx.stroke();cx.restore();}
+  function drawStardust(){const LD=145,MD=180,ME=50;for(const n of nodes){n.x+=n.vx;n.y+=n.vy;if(n.x<0){n.x=0;n.vx*=-1;}if(n.x>W){n.x=W;n.vx*=-1;}if(n.y<0){n.y=0;n.vy*=-1;}if(n.y>H){n.y=H;n.vy*=-1;}}for(let i=0;i<nodes.length;i++){const a=nodes[i],dma=Math.hypot(a.x-mouse.x,a.y-mouse.y),nmA=dma<MD;for(let j=i+1;j<nodes.length;j++){const b=nodes[j],dmb=Math.hypot(b.x-mouse.x,b.y-mouse.y);const d=Math.hypot(a.x-b.x,a.y-b.y),lim=(nmA||dmb<MD)?LD+ME:LD;if(d<lim){const op=(1-d/lim)*.28;const rv=Math.round((a.col[0]+b.col[0])/2),gv=Math.round((a.col[1]+b.col[1])/2),bv=Math.round((a.col[2]+b.col[2])/2);cx.beginPath();cx.moveTo(a.x,a.y);cx.lineTo(b.x,b.y);cx.strokeStyle=`rgba(${rv},${gv},${bv},${op})`;cx.lineWidth=.65;cx.stroke();}}}for(const n of nodes){const dm=Math.hypot(n.x-mouse.x,n.y-mouse.y),bst=dm<MD?1+(1-dm/MD)*1.2:1;const tw=.72+.28*Math.sin(tick*n.spd+n.phase),alpha=Math.min(n.al*bst*tw,1),rad=n.r*bst;const[rc,gc,bc]=n.col;if(n.spike){drawSpike(n.x,n.y,rad,alpha,n.col);}else{const gl=cx.createRadialGradient(n.x,n.y,0,n.x,n.y,rad*3.5);gl.addColorStop(0,`rgba(${rc},${gc},${bc},${alpha*.5})`);gl.addColorStop(1,`rgba(${rc},${gc},${bc},0)`);cx.beginPath();cx.arc(n.x,n.y,rad*3.5,0,Math.PI*2);cx.fillStyle=gl;cx.fill();cx.beginPath();cx.arc(n.x,n.y,rad,0,Math.PI*2);cx.fillStyle=`rgba(${rc},${gc},${bc},${alpha})`;cx.fill();}}if(mouse.x>0){const gr=cx.createRadialGradient(mouse.x,mouse.y,0,mouse.x,mouse.y,MD*.55);gr.addColorStop(0,'rgba(180,100,255,.07)');gr.addColorStop(.5,'rgba(80,200,255,.04)');gr.addColorStop(1,'rgba(0,0,0,0)');cx.beginPath();cx.arc(mouse.x,mouse.y,MD*.55,0,Math.PI*2);cx.fillStyle=gr;cx.fill();}}
+  let gx={yaw:0,yawTarget:0,pitch:0,pitchTarget:0,autoRot:0};
+  function mkGalaxyStar(i,total){const zone=Math.random();let r,angle,col,brightness,size;if(zone<.08){r=Math.random()*.06;angle=Math.random()*Math.PI*2;col=Math.random()<.5?[255,240,200]:[255,255,255];brightness=.7+Math.random()*.3;size=.5+Math.random()*1.8;}else if(zone<.65){const arm=Math.floor(Math.random()*2)*Math.PI;r=.08+Math.pow(Math.random(),.7)*.82;angle=arm+r*3.5+(Math.random()-.5)*.45;const t=r;if(t<.3)col=[180+Math.random()*75,200+Math.random()*55,255];else if(t<.6)col=[255,150+Math.random()*80,200+Math.random()*55];else col=[140+Math.random()*60,140+Math.random()*60,220+Math.random()*35];brightness=(.6-r*.3)+Math.random()*.35;size=.3+Math.random()*1.2*(1-r*.5);}else{r=.55+Math.random()*.45;angle=Math.random()*Math.PI*2;col=Math.random()<.4?[255,220,160]:[200,200,255];brightness=.06+Math.random()*.18;size=.2+Math.random()*.7;}return{r,angle,col,brightness,size,twinklePhase:Math.random()*Math.PI*2,twinkleSpd:.008+Math.random()*.018,driftAngle:angle,driftR:r};}
+  function drawMilkyWay(){if(mouse.x>0){gx.yawTarget=(mouse.x/W)*Math.PI*3;gx.pitchTarget=((mouse.y/H)-.5)*Math.PI*1.5;}gx.yaw+=(gx.yawTarget-gx.yaw)*.07;gx.pitch+=(gx.pitchTarget-gx.pitch)*.07;gx.autoRot+=.00018;const cx_=W*.5,cy_=H*.52,scale=Math.min(W,H)*.48;const cosYaw=Math.cos(gx.yaw+gx.autoRot),sinYaw=Math.sin(gx.yaw+gx.autoRot),cosPitch=Math.cos(gx.pitch),sinPitch=Math.sin(gx.pitch);const cg=cx.createRadialGradient(cx_,cy_,0,cx_,cy_,scale*.18);cg.addColorStop(0,'rgba(255,240,180,.18)');cg.addColorStop(.4,'rgba(200,160,255,.07)');cg.addColorStop(1,'rgba(0,0,0,0)');cx.beginPath();cx.arc(cx_,cy_,scale*.18,0,Math.PI*2);cx.fillStyle=cg;cx.fill();const squash=Math.max(.05,Math.abs(cosPitch));const ng=cx.createRadialGradient(cx_,cy_,0,cx_,cy_,scale*.72);ng.addColorStop(0,'rgba(80,40,120,.10)');ng.addColorStop(.35,'rgba(40,20,80,.07)');ng.addColorStop(.7,'rgba(0,10,40,.04)');ng.addColorStop(1,'rgba(0,0,0,0)');cx.save();cx.translate(cx_,cy_);cx.scale(1,squash);cx.rotate(gx.yaw+gx.autoRot);cx.beginPath();cx.arc(0,0,scale*.72,0,Math.PI*2);cx.fillStyle=ng;cx.fill();cx.restore();for(const s of nodes){s.driftAngle+=.000045*(1-s.driftR*.5);const gx2=Math.cos(s.driftAngle)*s.driftR,gy2=Math.sin(s.driftAngle)*s.driftR;const rx=gx2*cosYaw-gy2*sinYaw,ry=gx2*sinYaw+gy2*cosYaw;const projX=rx,projY=ry*cosPitch,projZ=ry*sinPitch;const depthFade=.75+.25*(1-(projZ+1)/2);const sx=cx_+projX*scale,sy=cy_+projY*scale;const tw=.75+.25*Math.sin(tick*s.twinkleSpd+s.twinklePhase);const alpha=Math.min(s.brightness*tw*depthFade,1);const[rc,gc,bc]=s.col;const dm=Math.hypot(sx-mouse.x,sy-mouse.y),boost=dm<120?1+(1-dm/120)*.9:1;const fa=Math.min(alpha*boost,1),fs=s.size*boost;if(s.size>1.1&&Math.random()<.004){drawSpike(sx,sy,fs*.8,fa*.7,s.col);}if(s.size>.7){const hR=fs*4;const hg=cx.createRadialGradient(sx,sy,0,sx,sy,hR);hg.addColorStop(0,`rgba(${rc},${gc},${bc},${fa*.35})`);hg.addColorStop(1,`rgba(${rc},${gc},${bc},0)`);cx.beginPath();cx.arc(sx,sy,hR,0,Math.PI*2);cx.fillStyle=hg;cx.fill();}cx.beginPath();cx.arc(sx,sy,fs,0,Math.PI*2);cx.fillStyle=`rgba(${rc},${gc},${bc},${fa})`;cx.fill();}if(mouse.x>0){const mg=cx.createRadialGradient(mouse.x,mouse.y,0,mouse.x,mouse.y,90);mg.addColorStop(0,'rgba(255,220,100,.06)');mg.addColorStop(.5,'rgba(180,100,255,.03)');mg.addColorStop(1,'rgba(0,0,0,0)');cx.beginPath();cx.arc(mouse.x,mouse.y,90,0,Math.PI*2);cx.fillStyle=mg;cx.fill();}}
+  function classicCol(){return isLight()?{r:0,g:88,b:196}:{r:0,g:212,b:255};}
+  function mkClassic(){const a=Math.random()*Math.PI*2,sp=.28+Math.random()*.5;return{x:Math.random()*W,y:Math.random()*H,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp,r:1.4+Math.random()*1.4,al:.35+Math.random()*.5};}
+  function drawClassic(){const c=classicCol(),LD=158,MD=190,ME=55;for(const n of nodes){n.x+=n.vx;n.y+=n.vy;if(n.x<0){n.x=0;n.vx*=-1;}if(n.x>W){n.x=W;n.vx*=-1;}if(n.y<0){n.y=0;n.vy*=-1;}if(n.y>H){n.y=H;n.vy*=-1;}}for(let i=0;i<nodes.length;i++){const a=nodes[i],dma=Math.hypot(a.x-mouse.x,a.y-mouse.y),nmA=dma<MD;for(let j=i+1;j<nodes.length;j++){const b=nodes[j],dmb=Math.hypot(b.x-mouse.x,b.y-mouse.y),d=Math.hypot(a.x-b.x,a.y-b.y);const lim=(nmA||dmb<MD)?LD+ME:LD;if(d<lim){cx.beginPath();cx.moveTo(a.x,a.y);cx.lineTo(b.x,b.y);cx.strokeStyle=`rgba(${c.r},${c.g},${c.b},${(1-d/lim)*.34})`;cx.lineWidth=.75;cx.stroke();}}}for(const n of nodes){const dm=Math.hypot(n.x-mouse.x,n.y-mouse.y),bst=dm<MD?1+(1-dm/MD)*1.1:1;cx.beginPath();cx.arc(n.x,n.y,n.r*bst,0,Math.PI*2);cx.fillStyle=`rgba(${c.r},${c.g},${c.b},${Math.min(n.al*bst,1)})`;cx.fill();}if(mouse.x>0){const gr=cx.createRadialGradient(mouse.x,mouse.y,0,mouse.x,mouse.y,MD*.5);gr.addColorStop(0,`rgba(${c.r},${c.g},${c.b},.055)`);gr.addColorStop(1,`rgba(${c.r},${c.g},${c.b},0)`);cx.beginPath();cx.arc(mouse.x,mouse.y,MD*.5,0,Math.PI*2);cx.fillStyle=gr;cx.fill();}}
+  const FF_COLS=[[255,80,180],[130,80,255],[80,200,255],[255,210,60],[80,255,180],[255,120,60],[200,80,255],[60,230,230],[255,100,100],[100,255,120]];
+  function mkFirefly(){const a=Math.random()*Math.PI*2,sp=.05+Math.random()*.22;const col=FF_COLS[Math.floor(Math.random()*FF_COLS.length)];return{x:Math.random()*W,y:Math.random()*H,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp,r:1.2+Math.random()*2.2,col:[...col],phase:Math.random()*Math.PI*2,spd:.012+Math.random()*.022,hueShift:Math.random()*360,hueSpd:.2+Math.random()*.4,wander:Math.random()*Math.PI*2,wanderSpd:.008+Math.random()*.014};}
+  function hslToRgb(h,s,l){h=((h%360)+360)%360;s/=100;l/=100;const k=n=>(n+h/30)%12;const a=s*Math.min(l,1-l);const f=n=>l-a*Math.max(-1,Math.min(k(n)-3,Math.min(9-k(n),1)));return[Math.round(f(0)*255),Math.round(f(8)*255),Math.round(f(4)*255)];}
+  function drawFireflies(){for(const n of nodes){n.hueShift+=n.hueSpd;n.wander+=n.wanderSpd;n.vx+=(Math.cos(n.wander)*.006);n.vy+=(Math.sin(n.wander)*.006);const speed=Math.hypot(n.vx,n.vy);if(speed>.35){n.vx*=.35/speed;n.vy*=.35/speed;}if(mouse.x>0){const dx=mouse.x-n.x,dy=mouse.y-n.y,dd=Math.hypot(dx,dy);if(dd<200&&dd>1){n.vx+=dx/dd*.012;n.vy+=dy/dd*.012;}}n.x+=n.vx;n.y+=n.vy;if(n.x<0||n.x>W)n.vx*=-1;if(n.y<0||n.y>H)n.vy*=-1;const[rc,gc,bc]=hslToRgb(n.hueShift,90,65);const tw=.5+.5*Math.sin(tick*n.spd+n.phase),alpha=Math.min(.18+tw*.75,1),rad=n.r*(1+tw*.4);const gl=cx.createRadialGradient(n.x,n.y,0,n.x,n.y,rad*5);gl.addColorStop(0,`rgba(${rc},${gc},${bc},${alpha*.6})`);gl.addColorStop(.4,`rgba(${rc},${gc},${bc},${alpha*.15})`);gl.addColorStop(1,`rgba(${rc},${gc},${bc},0)`);cx.beginPath();cx.arc(n.x,n.y,rad*5,0,Math.PI*2);cx.fillStyle=gl;cx.fill();cx.beginPath();cx.arc(n.x,n.y,rad,0,Math.PI*2);cx.fillStyle=`rgba(${rc},${gc},${bc},${alpha})`;cx.fill();}}
+  function mkNode(i,n){if(MODE==='milkyway')return mkGalaxyStar(i,n);if(MODE==='classic')return mkClassic();if(MODE==='fireflies')return mkFirefly();return mkStardust();}
+  function initNodes(n){nodes=Array.from({length:n},(_,i)=>mkNode(i,n));}
+  function draw(){if(!running)return;animId=requestAnimationFrame(draw);tick++;cx.clearRect(0,0,W,H);if(MODE==='milkyway')drawMilkyWay();else if(MODE==='classic')drawClassic();else if(MODE==='fireflies')drawFireflies();else drawStardust();}
+  let mouseReactive=true;
+  window.Particles={
+    start(n=80){resize();initNodes(n);running=true;if(!animId||!running)draw();},
+    stop(){running=false;cancelAnimationFrame(animId);animId=null;cx.clearRect(0,0,W,H);},
+    setCount(n){initNodes(n);},
+    setStyle(s,n){MODE=s;if(running)initNodes(n||nodes.length);},
+    isRunning(){return running;},
+    setMouseReactive(v){mouseReactive=v;if(!v){mouse.x=-9999;mouse.y=-9999;}}
+  };
+  // Mouse events — sadece mouseReactive aktifse güncelle
+  const origMouseMove=e=>{if(mouseReactive){mouse.x=e.clientX;mouse.y=e.clientY;}};
+  window.removeEventListener('mousemove',window.__artMouseMove);
+  window.__artMouseMove=origMouseMove;
+  window.addEventListener('mousemove',origMouseMove);
+  window.addEventListener('resize',resize);
+  window.addEventListener('mouseleave',()=>{mouse.x=-9999;mouse.y=-9999;});
+})();
+
+/* ════════════════════════════════════
+   INDEXEDDB — Arkaplan fotoğrafı için
+   localStorage'dan çok daha büyük boyut
+════════════════════════════════════ */
+(function(){
+  const DB_NAME='art3mis_idb', STORE='kv', VER=1;
+  let _db=null;
+  function _open(){
+    return new Promise((res,rej)=>{
+      if(_db){res(_db);return;}
+      const req=indexedDB.open(DB_NAME,VER);
+      req.onupgradeneeded=e=>{e.target.result.createObjectStore(STORE);};
+      req.onsuccess=e=>{_db=e.target.result;res(_db);};
+      req.onerror=e=>rej(e);
+    });
+  }
+  window.bgIdbSave=async function(val){
+    try{
+      const db=await _open();
+      const tx=db.transaction(STORE,'readwrite');
+      if(val)tx.objectStore(STORE).put(val,'bg');
+      else tx.objectStore(STORE).delete('bg');
+    }catch(e){console.warn('IDB save error',e);}
+  };
+  window.bgIdbLoad=async function(){
+    try{
+      const db=await _open();
+      return await new Promise((res,rej)=>{
+        const tx=db.transaction(STORE,'readonly');
+        const req=tx.objectStore(STORE).get('bg');
+        req.onsuccess=e=>res(e.target.result||'');
+        req.onerror=e=>rej(e);
+      });
+    }catch(e){return '';}
+  };
+})();
+
+/* ════════════════════════════════════
+   STATE
+════════════════════════════════════ */
+const SERVER='http://localhost:7842';
+let DB={games:[],shortcuts:[]};
+let CFG={
+  dark:true,particles:true,pcount:80,bgUrl:'',opacity:80,lang:'tr',pstyle:'stardust',
+  uiTheme:'cyber',particlesMouse:true,
+  playlist:[
+    {id:'1',name:'Spotify Sanatçı 🎧',url:'https://open.spotify.com/intl-tr/artist/6fOMl44jA4Sp5b9PpYCkzz?si=6EvVbshCTDSIxyTSrwFjVg',source:'spotify'},
+    {id:'2',name:'NF',url:'https://soundcloud.com/user-698908671/sets/nf',source:'soundcloud'}
+  ],
+  mpIdx:0,mpLoop:false,mpAutoRotate:true
+};
+let ctxTarget=null,searchOn=false,curTab='games';
+let editMode={type:null,index:-1};
+let fmHistory=[],fmFwdStack=[],fmCurrentData=null,fmSortKey='name',fmSortDir=1;
+let fmCtxItem=null; // file manager context item
+let qscPendingItem=null; // quick shortcut pending
+let plEditIndex=-1;
+let mpRotateTimer=null;
+
+/* ── INIT ── */
+async function init(){
+  try{const d=localStorage.getItem('art3mis_db');if(d)DB=JSON.parse(d);}catch(_e){}
+  try{const s=localStorage.getItem('art3mis_cfg');if(s)CFG={...CFG,...JSON.parse(s)};}catch(_e){}
+  // Arkaplan IndexedDB'den yükle (boyut sınırı yok)
+  try{
+    const bg=await bgIdbLoad();
+    if(bg){CFG.bgUrl=bg;}
+    // Migrate: eğer eski localStorage'da bg varsa IndexedDB'ye taşı ve sil
+    const oldBg=localStorage.getItem('art3mis_bg');
+    if(oldBg&&!bg){CFG.bgUrl=oldBg;await bgIdbSave(oldBg);localStorage.removeItem('art3mis_bg');}
+  }catch(e){}
+  // ensure default playlist
+  if(!CFG.playlist||!CFG.playlist.length){
+    CFG.playlist=[{id:'1',name:'Spotify Sanatçı 🎧',url:'https://open.spotify.com/intl-tr/artist/6fOMl44jA4Sp5b9PpYCkzz?si=6EvVbshCTDSIxyTSrwFjVg',source:'spotify'},{id:'2',name:'NF',url:'https://soundcloud.com/user-698908671/sets/nf',source:'soundcloud'}];
+    CFG.mpIdx=0;
+  }
+  applyConfig();
+  applyLang();
+  renderAll();
+  pingServer();
+  setInterval(pingServer,8000);
+  document.getElementById('pcslider').value=CFG.pcount;
+  document.getElementById('pclbl').textContent=CFG.pcount;
+  ['stardust','milkyway','classic','fireflies'].forEach(id=>{
+    const el=document.getElementById('ps-'+id);
+    if(el)el.classList.toggle('active',id===(CFG.pstyle||'stardust'));
+  });
+  renderPlaylistSettings();
+  fmLoadDrives();
+  checkProtocol();
+  setTimeout(mpInit,600);
+}
+function save(){
+  try{localStorage.setItem('art3mis_db',JSON.stringify(DB));}catch(e){}
+  const cfgSmall={...CFG,bgUrl:''};
+  try{localStorage.setItem('art3mis_cfg',JSON.stringify(cfgSmall));}catch(e){}
+  // Arkaplan büyük olabilir (base64) → IndexedDB kullan (sınırsız boyut)
+  bgIdbSave(CFG.bgUrl);
+}
+
+/* ── LANGUAGE ── */
+function t(key){return(LANG[CFG.lang]||LANG.tr)[key]||key;}
+function applyLang(){
+  document.getElementById('langbtn').textContent=CFG.lang==='tr'?'TR':'EN';
+  document.querySelectorAll('[data-t]').forEach(el=>{el.textContent=t(el.getAttribute('data-t'));});
+  document.querySelectorAll('[data-ph]').forEach(el=>{el.placeholder=t(el.getAttribute('data-ph'));});
+  ['games','shortcuts'].forEach(tp=>{const el=document.getElementById('q-'+tp);if(el)el.placeholder=t('searchPlaceholder_'+tp);});
+  const bb=document.getElementById('bgbox');if(!CFG.bgUrl)bb.textContent=t('pickFile');
+  const dot=document.getElementById('sdot');
+  if(dot.className.includes('ok'))document.getElementById('slbl').textContent=t('serverRunning');
+  else if(dot.className.includes('err'))document.getElementById('slbl').textContent=t('serverDown');
+  else document.getElementById('slbl').textContent=t('serverConnecting');
+}
+function toggleLang(){CFG.lang=CFG.lang==='tr'?'en':'tr';applyLang();renderAll();save();}
+
+/* ── CONFIG ── */
+function applyConfig(){
+  // Tema sınıflarını temizle ve yenisini uygula
+  document.body.classList.remove('theme-terminal','theme-aurora','theme-minimal');
+  if(CFG.uiTheme && CFG.uiTheme!=='cyber') document.body.classList.add('theme-'+CFG.uiTheme);
+  document.body.classList.toggle('light',!CFG.dark);
+  // Update header toggle icon: gece = 🌙, gündüz = ☀️
+  const tbtn=document.getElementById('tbtn');
+  if(tbtn)tbtn.textContent=CFG.dark?'🌙':'☀️';
+  document.getElementById('t-dark').classList.toggle('on',CFG.dark);
+  document.getElementById('tbtn').textContent=CFG.dark?'🌙':'☀️';
+  document.getElementById('t-part').classList.toggle('on',CFG.particles);
+  document.getElementById('t-loop').classList.toggle('on',CFG.mpLoop);
+  document.getElementById('t-autorot').classList.toggle('on',CFG.mpAutoRotate);
+  Particles.setStyle(CFG.pstyle||'stardust',CFG.pcount);
+  Particles.setMouseReactive(CFG.particlesMouse!==false);
+  if(CFG.particles)Particles.start(CFG.pcount);else Particles.stop();
+  // Tema kartlarını işaretle
+  ['cyber','terminal','aurora','minimal'].forEach(t=>{
+    const el=document.getElementById('th-'+t);
+    if(el)el.classList.toggle('active',t===(CFG.uiTheme||'cyber'));
+  });
+  document.getElementById('t-pmouse')?.classList.toggle('on',CFG.particlesMouse!==false);
+  setBgDisplay(CFG.bgUrl);
+  document.getElementById('bgdim').style.opacity=CFG.opacity/100;
+  document.getElementById('opslider').value=CFG.opacity;
+  document.getElementById('oplbl').textContent=CFG.opacity;
+}
+function toggleTheme(){CFG.dark=!CFG.dark;applyConfig();save();}
+function toggleParticles(){CFG.particles=!CFG.particles;applyConfig();save();}
+function setPC(n){CFG.pcount=n;document.getElementById('pclbl').textContent=n;if(CFG.particles)Particles.setCount(n);save();}
+function setParticleStyle(s){
+  CFG.pstyle=s;
+  ['stardust','milkyway','classic','fireflies'].forEach(id=>{document.getElementById('ps-'+id).classList.toggle('active',id===s);});
+  Particles.setStyle(s,CFG.pcount);
+  if(!Particles.isRunning()&&CFG.particles)Particles.start(CFG.pcount);
+  save();
+}
+function setUITheme(t){
+  CFG.uiTheme=t;
+  applyConfig();save();
+  notify('🎨 Tema: '+t.toUpperCase(),'info');
+}
+function toggleParticleMouse(){
+  CFG.particlesMouse=!(CFG.particlesMouse!==false);
+  document.getElementById('t-pmouse').classList.toggle('on',CFG.particlesMouse);
+  Particles.setMouseReactive(CFG.particlesMouse);
+  save();
+}
+function toggleLoop(){CFG.mpLoop=!CFG.mpLoop;document.getElementById('t-loop').classList.toggle('on',CFG.mpLoop);save();}
+function toggleAutoRotate(){
+  CFG.mpAutoRotate=!CFG.mpAutoRotate;
+  document.getElementById('t-autorot').classList.toggle('on',CFG.mpAutoRotate);
+  save();
+  if(CFG.mpAutoRotate)startRotateTimer();else stopRotateTimer();
+}
+
+
+/* ── TABS ── */
+function showTab(name){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('on'));
+  document.querySelectorAll('.tab').forEach(tp=>tp.classList.remove('on'));
+  document.getElementById('panel-'+name).classList.add('on');
+  document.getElementById('tab-'+name).classList.add('on');
+  curTab=name;
+  if(name==='files'&&!fmHistory.length)fmLoadDrives();
+}
+
+/* ── BACKGROUND ── */
+function setBgDisplay(url){
+  const box=document.getElementById('bgbox'),layer=document.getElementById('bgimg');
+  if(url){layer.style.backgroundImage=`url('${url}')`;layer.style.opacity='1';
+    box.innerHTML=`<img src="${esc(url)}" style="width:100%;height:100%;object-fit:cover">`;}
+  else{layer.style.backgroundImage='';layer.style.opacity='0';box.textContent=t('pickFile');}
+}
+function pickBgFile(inp){const f=inp.files[0];if(!f)return;const r=new FileReader();r.onload=e=>{CFG.bgUrl=e.target.result;applyConfig();save();notify(t('bgUpdated'),'ok');};r.readAsDataURL(f);}
+function setBgUrl(){const u=document.getElementById('bgurl').value.trim();if(!u)return;CFG.bgUrl=u;applyConfig();save();notify(t('bgUpdated'),'ok');}
+function clearBg(){CFG.bgUrl='';applyConfig();save();notify(t('bgCleared'),'info');}
+function setOpacity(v){CFG.opacity=v;document.getElementById('bgdim').style.opacity=v/100;document.getElementById('oplbl').textContent=v;save();}
+
+/* ── SEARCH ── */
+function toggleSearch(){
+  searchOn=!searchOn;
+  ['games','shortcuts'].forEach(tp=>{const el=document.getElementById('sw-'+tp);if(el)el.style.display=searchOn?'block':'none';});
+  document.getElementById('sbtn').classList.toggle('on',searchOn);
+  if(searchOn)setTimeout(()=>document.getElementById('q-'+curTab)?.focus(),80);
+}
+function filter(type,q){
+  Array.from(document.getElementById('grid-'+type).children).forEach(c=>{
+    c.style.display=(c.dataset.name||'').toLowerCase().includes(q.toLowerCase())?'':'none';});
+}
+
+/* ── SERVER ── */
+// Warn if opened as local file
+function checkProtocol(){
+  if(location.protocol==='file:'){
+    // Show persistent warning banner
+    const banner = document.createElement('div');
+    banner.id = 'file-warn';
+    banner.style.cssText = `position:fixed;bottom:0;left:0;right:0;z-index:9999;
+      background:rgba(255,160,0,.13);border-top:1px solid rgba(255,160,0,.4);
+      backdrop-filter:blur(12px);padding:8px 20px;display:flex;align-items:center;
+      justify-content:space-between;gap:12px;font-family:'Space Mono',monospace;font-size:.6rem;`;
+    banner.innerHTML = `<span style="color:#ffb020">⚠️&nbsp; <b>file:// modunda açık</b> — Müzik player, dosya seçici ve oyun başlatma çalışmaz.
+      Tam özellik için: <code style="background:rgba(255,176,32,.15);padding:2px 6px;border-radius:4px">python server.py</code>
+      → <code style="background:rgba(255,176,32,.15);padding:2px 6px;border-radius:4px">localhost:7842</code></span>
+      <span onclick="document.getElementById('file-warn').remove()" style="cursor:pointer;color:rgba(255,176,32,.6);padding:2px 8px;font-size:.8rem">✕</span>`;
+    document.body.appendChild(banner);
+    // Also show console note
+    console.info('[ART3MIS] file:// modunda çalışıyor. SoundCloud CORS hataları ve autoplay uyarıları beklenen davranış. server.py ile açınız.');
+  }
+}
+
+async function pingServer(){
+  const dot=document.getElementById('sdot'),lbl=document.getElementById('slbl');
+  try{
+    const res=await fetch(`${SERVER}/ping`,{signal:AbortSignal.timeout(3000)});
+    const d=await res.json();
+    if(d.ok){dot.className='sdot ok';lbl.textContent=t('serverRunning');
+      document.getElementById('srv-desc').textContent=t('serverOk')+(d.tk?' ✓ tkinter':' ⚠ no tkinter');}
+  }catch(_e){
+    dot.className='sdot err';lbl.textContent=t('serverDown');
+    document.getElementById('srv-desc').textContent=t('serverErr');
+  }
+}
+
+/* ── FILE BROWSE ── */
+async function browseFile(targetId){
+  const btn=document.getElementById(targetId+'-btn');
+  if(btn){btn.classList.add('pbtn-loading');btn.textContent='⏳';}
+  try{const res=await fetch(`${SERVER}/pick-file`,{signal:AbortSignal.timeout(60000)});
+    const d=await res.json();if(d.ok&&d.path)document.getElementById(targetId).value=d.path;}
+  catch{notify(t('serverClosed'),'err');}
+  finally{if(btn){btn.classList.remove('pbtn-loading');btn.innerHTML=`📂 <span>${t('browse')}</span>`;}}
+}
+async function pickImageFile(){
+  try{const res=await fetch(`${SERVER}/pick-file`,{signal:AbortSignal.timeout(60000)});
+    const d=await res.json();
+    if(d.ok&&d.path){document.getElementById('gimg').value=d.path;const p=document.getElementById('gprev');p.src=d.path;p.style.display='block';}}
+  catch{notify(t('serverClosed'),'err');}
+}
+
+/* ── LAUNCH ── */
+async function launch(path,name){
+  if(!path){notify(t('pathRequired'),'err');return;}
+  const ov=document.getElementById('lv'),prog=document.getElementById('lvprog');
+  document.getElementById('lvname').textContent=path;
+  ov.classList.add('show');
+  prog.style.animation='none';void prog.offsetHeight;prog.style.animation='prog 1.3s ease forwards';
+  try{
+    const res=await fetch(`${SERVER}/open?path=${encodeURIComponent(path)}`,{signal:AbortSignal.timeout(5000)});
+    const d=await res.json();
+    setTimeout(()=>ov.classList.remove('show'),500);
+    if(d.ok)notify(`"${name||path}" ${t('launched')}`,'ok');
+    else notify(`${t('error')}: ${d.error}`,'err');
+  }catch(_e){setTimeout(()=>ov.classList.remove('show'),300);notify(t('serverClosed'),'err');}
+}
+
+/* ════════════════════════════════════
+   FILE MANAGER
+════════════════════════════════════ */
+function fmFileIcon(name,isDir){
+  if(isDir)return'📁';
+  const ext=(name.split('.').pop()||'').toLowerCase();
+  const map={exe:'⚙️',bat:'⚙️',cmd:'⚙️',lnk:'⚡',ps1:'⚙️',msi:'⚙️',
+    jpg:'🖼️',jpeg:'🖼️',png:'🖼️',gif:'🖼️',webp:'🖼️',svg:'🖼️',ico:'🖼️',bmp:'🖼️',
+    mp4:'🎬',mkv:'🎬',avi:'🎬',mov:'🎬',wmv:'🎬',
+    mp3:'🎵',wav:'🎵',flac:'🎵',ogg:'🎵',m4a:'🎵',
+    pdf:'📄',doc:'📝',docx:'📝',xls:'📊',xlsx:'📊',ppt:'📊',pptx:'📊',
+    txt:'📃',log:'📃',json:'📃',xml:'📃',csv:'📃',ini:'📃',cfg:'📃',
+    zip:'📦',rar:'📦','7z':'📦',tar:'📦',gz:'📦',
+    html:'🌐',htm:'🌐',js:'🟨',ts:'🔷',py:'🐍',cs:'#️⃣',cpp:'🔧',c:'🔧',
+  };
+  return map[ext]||'📄';
+}
+function fmFmtSize(bytes){
+  if(bytes==null||bytes<0)return'—';
+  if(bytes<1024)return bytes+'B';
+  if(bytes<1048576)return(bytes/1024).toFixed(1)+'KB';
+  if(bytes<1073741824)return(bytes/1048576).toFixed(1)+'MB';
+  return(bytes/1073741824).toFixed(2)+'GB';
+}
+function fmFileType(name){
+  const ext=(name.split('.').pop()||'').toUpperCase();
+  return ext||'FILE';
+}
+
+async function fmLoadDrives(){
+  try{
+    const res=await fetch(`${SERVER}/drives`,{signal:AbortSignal.timeout(4000)});
+    const d=await res.json();
+    if(!d.ok)return;
+    const cont=document.getElementById('fm-drives');
+    cont.innerHTML='';
+    d.drives.forEach(dr=>{
+      const el=document.createElement('div');el.className='fm-side-item';
+      el.innerHTML=`<span>💾</span><span>${dr.name}</span>`;
+      el.onclick=()=>fmNavigate(dr.path);
+      cont.appendChild(el);
+    });
+    // Quick access
+    const qEl=document.getElementById('fm-quick');
+    qEl.innerHTML='';
+    const homeEntry={name:'Desktop',path:'%USERPROFILE%\\Desktop'};
+    const quickItems=[
+      {name:'Desktop',path:'%USERPROFILE%\\Desktop',icon:'🖥️'},
+      {name:'Downloads',path:'%USERPROFILE%\\Downloads',icon:'⬇️'},
+      {name:'Documents',path:'%USERPROFILE%\\Documents',icon:'📑'},
+    ];
+    quickItems.forEach(qi=>{
+      const el=document.createElement('div');el.className='fm-side-item';
+      el.innerHTML=`<span>${qi.icon}</span><span style="font-size:.78rem">${qi.name}</span>`;
+      el.onclick=()=>fmNavigate(qi.path);
+      qEl.appendChild(el);
+    });
+    // Navigate to first drive
+    if(d.drives.length)fmNavigate(d.drives[0].path);
+  }catch(_e){
+    document.getElementById('fm-list').innerHTML=`<div id="fm-loading"><span>⚠️</span><span style="font-size:.78rem">${t('serverClosed')}</span></div>`;
+  }
+}
+
+async function fmNavigate(path){
+  const list=document.getElementById('fm-list');
+  list.innerHTML=`<div id="fm-loading"><div style="font-size:1.4rem;animation:spin 1s linear infinite">↻</div><span>${path}</span></div>`;
+  try{
+    const res=await fetch(`${SERVER}/list-folder?path=${encodeURIComponent(path)}`,{signal:AbortSignal.timeout(8000)});
+    const d=await res.json();
+    if(!d.ok){list.innerHTML=`<div id="fm-loading">⚠️ ${esc(d.error||'Hata')}</div>`;return;}
+    fmCurrentData=d;
+    fmHistory.push(path);
+    fmFwdStack=[];
+    fmRender(d);
+    document.getElementById('fm-path').value=d.path;
+    document.getElementById('fm-back').classList.toggle('dis',fmHistory.length<=1);
+    document.getElementById('fm-fwd').classList.toggle('dis',true);
+    // Sidebar highlight
+    document.querySelectorAll('.fm-side-item').forEach(el=>el.classList.remove('on'));
+    document.querySelectorAll('.fm-side-item').forEach(el=>{
+      if(el.querySelector('span:last-child')?.textContent===d.path)el.classList.add('on');
+    });
+  }catch(e){
+    list.innerHTML=`<div id="fm-loading">⚠️ ${t('serverClosed')}</div>`;
+  }
+}
+
+function fmRender(d){
+  const list=document.getElementById('fm-list');
+  list.innerHTML='';
+  let rows=[];
+  (d.dirs||[]).forEach(dir=>{
+    rows.push({name:dir.name,path:dir.path,isDir:true,size:-1,created:dir.created||'',modified:dir.modified||'',type:'DIR'});
+  });
+  (d.files||[]).forEach(f=>{
+    rows.push({name:f.name,path:f.path,isDir:false,size:f.size||0,created:f.created||'',modified:f.modified||'',type:fmFileType(f.name)});
+  });
+  // Sort
+  rows.sort((a,b)=>{
+    if(a.isDir&&!b.isDir)return-1;if(!a.isDir&&b.isDir)return 1;
+    let av=a[fmSortKey],bv=b[fmSortKey];
+    if(fmSortKey==='size'){av=a.size;bv=b.size;}
+    if(typeof av==='string')av=av.toLowerCase();
+    if(typeof bv==='string')bv=bv.toLowerCase();
+    return(av<bv?-1:av>bv?1:0)*fmSortDir;
+  });
+  if(!rows.length){
+    list.innerHTML='<div id="fm-loading" style="color:var(--dim)">📂 Boş</div>';
+  }else{
+    rows.forEach(row=>{
+      const el=document.createElement('div');
+      el.className='fm-row'+(row.isDir?' dir':'');
+      el.innerHTML=`
+        <div class="fm-name"><span class="fm-name-ico">${fmFileIcon(row.name,row.isDir)}</span><span class="fm-name-txt">${esc(row.name)}</span></div>
+        <div class="fm-cell">${row.isDir?'—':fmFmtSize(row.size)}</div>
+        <div class="fm-cell">${row.created||'—'}</div>
+        <div class="fm-cell">${row.isDir?'DIR':row.type}</div>`;
+      el.ondblclick=()=>{
+        if(row.isDir)fmNavigate(row.path);
+        else launch(row.path,row.name);
+      };
+      el.onclick=()=>{
+        document.querySelectorAll('.fm-row.sel').forEach(r=>r.classList.remove('sel'));
+        el.classList.add('sel');
+        document.getElementById('fm-sel-info').textContent=row.name;
+      };
+      el.oncontextmenu=ev=>{ev.preventDefault();fmShowCtx(ev,row);};
+      list.appendChild(el);
+    });
+  }
+  const dirs=(d.dirs||[]).length,files=(d.files||[]).length;
+  document.getElementById('fm-count').textContent=`${dirs} klasör, ${files} dosya`;
+  document.getElementById('fm-sel-info').textContent='';
+  // Sort headers
+  ['name','size','created','type'].forEach(k=>{
+    const el=document.getElementById('fmh-'+k);
+    if(el){el.classList.remove('sort-asc','sort-desc');
+      if(k===fmSortKey)el.classList.add(fmSortDir===1?'sort-asc':'sort-desc');}
+  });
+}
+
+function fmSort(key){
+  if(fmSortKey===key)fmSortDir*=-1;else{fmSortKey=key;fmSortDir=1;}
+  if(fmCurrentData)fmRender(fmCurrentData);
+}
+
+function fmBack(){
+  if(fmHistory.length<=1)return;
+  fmFwdStack.push(fmHistory.pop());
+  const prev=fmHistory[fmHistory.length-1];
+  fmHistory.pop(); // fmNavigate will push again
+  fmNavigate(prev);
+  document.getElementById('fm-fwd').classList.toggle('dis',false);
+}
+function fmFwd(){
+  if(!fmFwdStack.length)return;
+  const next=fmFwdStack.pop();
+  fmNavigate(next);
+}
+function fmUp(){
+  if(!fmCurrentData||!fmCurrentData.parent)return;
+  fmNavigate(fmCurrentData.parent);
+}
+function fmGo(){
+  const p=document.getElementById('fm-path').value.trim();
+  if(p)fmNavigate(p);
+}
+function fmRefresh(){
+  if(fmCurrentData)fmNavigate(fmCurrentData.path);
+}
+document.getElementById('fm-path').addEventListener('keydown',e=>{if(e.key==='Enter')fmGo();});
+
+function fmShowCtx(ev,row){
+  fmCtxItem=row;
+  const ctx=document.getElementById('ctx');
+  ctx.style.display='block';
+  ctx.style.left=Math.min(ev.clientX,innerWidth-180)+'px';
+  ctx.style.top=Math.min(ev.clientY,innerHeight-150)+'px';
+  // Show/hide relevant items
+  document.getElementById('ctx-edit').style.display='none';
+}
+
+/* ════════════════════════════════════
+   RENDER
+════════════════════════════════════ */
+function renderAll(){renderGames();renderShortcuts();updateStats();}
+function updateStats(){
+  document.getElementById('stg').textContent=DB.games.length;
+  document.getElementById('sts').textContent=DB.shortcuts.length;
+  document.getElementById('cg').textContent=DB.games.length;
+  document.getElementById('cs').textContent=DB.shortcuts.length;
+}
+
+function renderGames(){
+  const g=document.getElementById('grid-games'),e=document.getElementById('em-games');
+  g.innerHTML='';
+  if(!DB.games.length){e.style.display='flex';return;}e.style.display='none';
+  DB.games.forEach((gm,i)=>{
+    const d=document.createElement('div');d.className='card';d.dataset.name=gm.name;
+    const img=gm.img
+      ?`<img src="${esc(gm.img)}" loading="lazy" style="width:100%;aspect-ratio:3/4;object-fit:cover;display:block"
+           onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+         <div class="cph" style="display:none">${gm.icon||'🎮'}</div>`
+      :`<div class="cph">${gm.icon||'🎮'}</div>`;
+    d.innerHTML=`${img}
+      <div class="cacts">
+        <div class="ca play ca-launch" title="Başlat">▶</div>
+        <div class="ca edit" onclick="openEdit('game',${i});event.stopPropagation()">✏️</div>
+        <div class="ca" onclick="del('games',${i});event.stopPropagation()">🗑</div>
+      </div>
+      <div class="cinfo">
+        <div class="cname">${esc(gm.name)}</div>
+        <div class="cmeta">${gm.genre||''}${gm.genre&&gm.year?' · ':''}${gm.year||''}</div>
+      </div>`;
+    d.onclick=ev=>{if(!ev.target.closest('.ca.edit')&&!ev.target.closest('.ca:not(.ca-launch)'))launch(gm.path,gm.name);};
+    d.oncontextmenu=ev=>{ev.preventDefault();fmCtxItem=null;showItemCtx(ev,'game',i);};
+    g.appendChild(d);
+  });
+}
+
+function renderShortcuts(){
+  const g=document.getElementById('grid-shortcuts'),e=document.getElementById('em-shortcuts');
+  g.innerHTML='';
+  if(!DB.shortcuts.length){e.style.display='flex';return;}e.style.display='none';
+  DB.shortcuts.forEach((s,i)=>{
+    const c=s.color||'#00d4ff';
+    const d=document.createElement('div');d.className='scard';d.dataset.name=s.name;
+    d.style.cssText=`--A:${c};border-color:${c}22`;
+    d.innerHTML=`
+      <div class="sph" style="background:linear-gradient(135deg,${c}12,${c}22)">${s.icon||'⚡'}</div>
+      <div class="cacts">
+        <div class="ca play ca-launch" title="Başlat">▶</div>
+        <div class="ca edit" onclick="openEdit('shortcut',${i});event.stopPropagation()">✏️</div>
+        <div class="ca" onclick="del('shortcuts',${i});event.stopPropagation()">🗑</div>
+      </div>
+      <div class="scinfo">
+        <div class="scname">${esc(s.name)}</div>
+        <div class="scpath">${esc(s.path)}</div>
+        ${s.note?`<div style="font-size:.68rem;color:var(--dim);margin-top:2px">${esc(s.note)}</div>`:''}
+      </div>`;
+    d.onclick=ev=>{if(!ev.target.closest('.ca.edit')&&!ev.target.closest('.ca:not(.ca-launch)'))launch(s.path,s.name);};
+    d.oncontextmenu=ev=>{ev.preventDefault();fmCtxItem=null;showItemCtx(ev,'shortcut',i);};
+    g.appendChild(d);
+  });
+}
+
+/* ── DELETE ── */
+function del(type,i){
+  const name=DB[type][i]?.name;
+  DB[type].splice(i,1);save();renderAll();notify(`"${name}" ${t('deleted')}`,'err');
+}
+
+/* ── CONTEXT MENU ── */
+function showItemCtx(ev,type,i){
+  ctxTarget={type,i};fmCtxItem=null;
+  const ctx=document.getElementById('ctx');
+  ctx.style.display='block';
+  ctx.style.left=Math.min(ev.clientX,innerWidth-180)+'px';
+  ctx.style.top=Math.min(ev.clientY,innerHeight-150)+'px';
+  document.getElementById('ctx-edit').style.display='flex';
+  document.getElementById('ctx-sc').style.display='none';
+  document.getElementById('ctx-copy').style.display='flex';
+}
+
+function ctxDo(action){
+  const ctx=document.getElementById('ctx');
+  ctx.style.display='none';
+
+  if(fmCtxItem){
+    // File manager context
+    const row=fmCtxItem;fmCtxItem=null;
+    if(action==='open')launch(row.path,row.name);
+    else if(action==='sc')openQuickShortcut(row);
+    else if(action==='copy')copyToClipboard(row.path);
+    else if(action==='del'){}  // not shown for fm
+    return;
+  }
+  if(!ctxTarget)return;
+  const{type,i}=ctxTarget;
+  const dbKey=type==='game'?'games':'shortcuts';
+  if(action==='open'){
+    const item=DB[dbKey][i];if(item)launch(item.path,item.name);
+  }else if(action==='edit')openEdit(type,i);
+  else if(action==='del')del(dbKey,i);
+  else if(action==='copy'){const item=DB[dbKey][i];if(item)copyToClipboard(item.path);}
+  ctxTarget=null;
+}
+
+function hideCtx(){document.getElementById('ctx').style.display='none';ctxTarget=null;}
+document.addEventListener('click',hideCtx);
+document.addEventListener('keydown',e=>{if(e.key==='Escape')hideCtx();});
+
+/* QUICK SHORTCUT FROM FILE MANAGER */
+function openQuickShortcut(row){
+  qscPendingItem=row;
+  const ext=(row.name.split('.').pop()||'').toLowerCase();
+  const icons={exe:'⚙️',bat:'⚙️',cmd:'⚙️',lnk:'⚡',mp3:'🎵',mp4:'🎬',pdf:'📄',png:'🖼️',jpg:'🖼️'};
+  document.getElementById('qsc-name').value=row.name.replace(/\.[^/.]+$/,'');
+  document.getElementById('qsc-icon').value=row.isDir?'📁':(icons[ext]||'⚡');
+  document.getElementById('ov-qsc').classList.add('open');
+}
+function confirmQuickShortcut(){
+  if(!qscPendingItem)return;
+  const name=document.getElementById('qsc-name').value.trim();
+  if(!name){notify(t('gameName')+' '+t('required'),'err');return;}
+  const sc={
+    name,path:qscPendingItem.path,
+    icon:document.getElementById('qsc-icon').value.trim()||'⚡',
+    color:document.getElementById('qsc-color').value,
+    note:''
+  };
+  DB.shortcuts.push(sc);save();renderShortcuts();updateStats();
+  closeModal('qsc');
+  notify(`"${name}" ${t('added')}`,'ok');
+  qscPendingItem=null;
+}
+
+function copyToClipboard(text){
+  navigator.clipboard?.writeText(text).then(()=>notify(t('copiedPath'),'ok')).catch(()=>notify('Clipboard error','err'));
+}
+
+/* ── MODALS ── */
+function openModal(type){
+  editMode={type:null,index:-1};
+  clearForms();
+  if(type==='game'){
+    document.getElementById('gmodal-title').textContent=t('addGame');
+    document.getElementById('gmodal-badge').style.display='none';
+    document.getElementById('gbtn').textContent=t('addGameBtn');
+  }else if(type==='shortcut'){
+    document.getElementById('smodal-title').textContent=t('addShortcut');
+    document.getElementById('smodal-badge').style.display='none';
+    document.getElementById('sbtn2').textContent=t('addShortcutBtn');
+  }else if(type==='playlist'){
+    plEditIndex=-1;plSetSrc('spotify');
+    document.getElementById('plmodal-title').textContent=t('addToPlaylist');
+    document.getElementById('plmodal-badge').style.display='none';
+    document.getElementById('plbtn').textContent=t('addPlaylistBtn');
+    document.getElementById('plname').value='';
+    document.getElementById('plurl').value='';
+  }
+  document.getElementById('ov-'+type).classList.add('open');
+}
+
+function openEdit(type,i){
+  editMode={type,index:i};clearForms();
+  if(type==='game'){
+    const gm=DB.games[i];
+    document.getElementById('gname').value=gm.name||'';
+    document.getElementById('gpath').value=gm.path||'';
+    document.getElementById('ggenre').value=gm.genre||'';
+    document.getElementById('gyear').value=gm.year||'';
+    document.getElementById('gimg').value=gm.img||'';
+    document.getElementById('gicon').value=gm.icon||'';
+    if(gm.img){const p=document.getElementById('gprev');p.src=gm.img;p.style.display='block';}
+    document.getElementById('gmodal-title').textContent=gm.name;
+    document.getElementById('gmodal-badge').style.display='inline-block';
+    document.getElementById('gmodal-badge').textContent=t('editing');
+    document.getElementById('gbtn').textContent=t('editGameBtn');
+    document.getElementById('ov-game').classList.add('open');
+  }else if(type==='shortcut'){
+    const s=DB.shortcuts[i];
+    document.getElementById('sname').value=s.name||'';
+    document.getElementById('spath').value=s.path||'';
+    document.getElementById('sicon').value=s.icon||'';
+    document.getElementById('scolor').value=s.color||'#00d4ff';
+    document.getElementById('snote').value=s.note||'';
+    document.getElementById('smodal-title').textContent=s.name;
+    document.getElementById('smodal-badge').style.display='inline-block';
+    document.getElementById('smodal-badge').textContent=t('editing');
+    document.getElementById('sbtn2').textContent=t('editShortcutBtn');
+    document.getElementById('ov-shortcut').classList.add('open');
+  }
+}
+
+function closeModal(type){
+  document.getElementById('ov-'+type).classList.remove('open');
+  clearForms();editMode={type:null,index:-1};
+}
+function clearForms(){
+  ['gname','gpath','ggenre','gyear','gimg','gicon',
+   'sname','spath','sicon','snote'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+  const p=document.getElementById('gprev');if(p){p.src='';p.style.display='none';}
+  const sc=document.getElementById('scolor');if(sc)sc.value='#00d4ff';
+}
+document.querySelectorAll('.ov').forEach(o=>{
+  o.addEventListener('click',ev=>{if(ev.target===o)closeModal(o.id.replace('ov-',''));});
+});
+
+/* ── SAVE GAME ── */
+function saveGame(){
+  const name=document.getElementById('gname').value.trim();
+  if(!name){notify(t('gameName')+' '+t('required'),'err');return;}
+  const obj={name,path:document.getElementById('gpath').value.trim(),genre:document.getElementById('ggenre').value.trim(),year:document.getElementById('gyear').value.trim(),img:document.getElementById('gimg').value.trim(),icon:document.getElementById('gicon').value.trim()||'🎮'};
+  if(editMode.type==='game'&&editMode.index>=0){DB.games[editMode.index]=obj;save();renderAll();closeModal('game');notify(`"${name}" ${t('saved')}`,'ok');}
+  else{DB.games.push(obj);save();renderAll();closeModal('game');notify(`"${name}" ${t('added')}`,'ok');}
+}
+
+/* ── SAVE SHORTCUT ── */
+function saveShortcut(){
+  const name=document.getElementById('sname').value.trim(),path=document.getElementById('spath').value.trim();
+  if(!name||!path){notify(t('pathRequired'),'err');return;}
+  const obj={name,path,icon:document.getElementById('sicon').value.trim()||'⚡',color:document.getElementById('scolor').value,note:document.getElementById('snote').value.trim()};
+  if(editMode.type==='shortcut'&&editMode.index>=0){DB.shortcuts[editMode.index]=obj;save();renderAll();closeModal('shortcut');notify(`"${name}" ${t('saved')}`,'ok');}
+  else{DB.shortcuts.push(obj);save();renderAll();closeModal('shortcut');notify(`"${name}" ${t('added')}`,'ok');}
+}
+
+function previewImg(a,b){const v=document.getElementById(a).value;const p=document.getElementById(b);if(v){p.src=v;p.style.display='block';}else p.style.display='none';}
+
+/* ════════════════════════════════════
+   PLAYLIST MANAGEMENT
+════════════════════════════════════ */
+let plNewSrc='spotify';
+function plSetSrc(src){
+  plNewSrc=src;
+  const srcMap={'sp':'spotify','sc':'soundcloud','yt':'youtube'};
+  ['sp','sc','yt'].forEach(s=>{
+    const id=srcMap[s];
+    const el=document.getElementById('plsrc-'+s);
+    if(!el)return;
+    const on=src===id;
+    el.classList.toggle('on',on);
+    el.querySelector('div:last-child').style.color=on?'var(--A)':'var(--dim)';
+  });
+  const hints={spotify:t('spHint'),soundcloud:t('scHint'),youtube:t('ytHint')};
+  document.getElementById('plurl-hint').textContent=hints[src]||'';
+}
+function savePlaylistItem(){
+  const name=document.getElementById('plname').value.trim();
+  const url=document.getElementById('plurl').value.trim();
+  if(!name||!url){notify(t('trackName')+' '+t('required'),'err');return;}
+  const item={id:Date.now().toString(),name,url,source:plNewSrc};
+  if(plEditIndex>=0){CFG.playlist[plEditIndex]=item;}
+  else{CFG.playlist.push(item);}
+  save();renderPlaylistSettings();closeModal('playlist');
+  notify(`"${name}" ${t('added')}`,'ok');
+  plEditIndex=-1;
+}
+function renderPlaylistSettings(){
+  const el=document.getElementById('pl-list');
+  el.innerHTML='';
+  CFG.playlist.forEach((item,i)=>{
+    const d=document.createElement('div');d.className='pl-item'+(i===CFG.mpIdx?' pl-active':'');
+    const icon=item.source==='soundcloud'?'☁️':item.source==='spotify'?'🎧':'▶️';
+    d.innerHTML=`
+      <span class="pl-src">${icon}</span>
+      <div class="pl-info">
+        <div class="pl-name">${esc(item.name)}</div>
+        <div class="pl-url">${esc(item.url)}</div>
+      </div>
+      <div class="pl-acts">
+        <div class="pl-btn" onclick="mpPlayIndex(${i})" title="Çal">▶</div>
+        <div class="pl-btn" onclick="plEdit(${i})" title="Düzenle">✏️</div>
+        <div class="pl-btn d" onclick="plRemove(${i})" title="Sil">🗑</div>
+      </div>`;
+    el.appendChild(d);
+  });
+}
+function plEdit(i){
+  const item=CFG.playlist[i];plEditIndex=i;
+  document.getElementById('plname').value=item.name;
+  document.getElementById('plurl').value=item.url;
+  plSetSrc(item.source);
+  document.getElementById('plmodal-title').textContent=item.name;
+  document.getElementById('plmodal-badge').style.display='inline-block';
+  document.getElementById('plmodal-badge').textContent=t('editing');
+  document.getElementById('plbtn').textContent=t('editPlaylistBtn');
+  document.getElementById('ov-playlist').classList.add('open');
+}
+function plRemove(i){
+  const name=CFG.playlist[i]?.name;
+  CFG.playlist.splice(i,1);
+  if(CFG.mpIdx>=CFG.playlist.length)CFG.mpIdx=0;
+  save();renderPlaylistSettings();notify(`"${name}" ${t('deleted')}`,'err');
+}
+
+/* ════════════════════════════════════
+   MUSIC PLAYER
+════════════════════════════════════ */
+let mpExpanded=false;
+
+function buildScEmbed(url){
+  return'https://w.soundcloud.com/player/?url='+encodeURIComponent(url)
+    +'&color=%2300d4ff&auto_play=true&hide_related=true'
+    +'&show_comments=false&show_user=true&show_reposts=false'
+    +'&show_teaser=false&visual=false&buying=false&sharing=false';
+}
+function buildYtEmbed(url){
+  if(!url)return'';
+  try{
+    const u=new URL(url);let videoId='',listId='';
+    if(u.hostname.includes('youtu.be')){videoId=u.pathname.slice(1);}
+    else{videoId=u.searchParams.get('v')||'';listId=u.searchParams.get('list')||'';}
+    if(listId)return`https://www.youtube.com/embed/videoseries?list=${listId}&autoplay=1`;
+    if(videoId)return`https://www.youtube.com/embed/${videoId}?autoplay=1&loop=1&playlist=${videoId}`;
+  }catch(_e){}
+  return'';
+}
+
+function buildSpotifyEmbed(url){
+  if(!url)return'';
+  try{
+    // Normalize: strip intl-XX locale prefix and query params
+    // Handles: open.spotify.com/intl-tr/artist/ID?si=xxx
+    //          open.spotify.com/playlist/ID
+    //          spotify:playlist:ID  (URI format)
+    let cleanUrl=url.trim();
+    // Handle spotify:type:id URI
+    if(cleanUrl.startsWith('spotify:')){
+      const p=cleanUrl.split(':');
+      if(p.length>=3)return`https://open.spotify.com/embed/${p[1]}/${p[2]}?utm_source=generator&theme=0`;
+      return'';
+    }
+    // Ensure it has protocol
+    if(!cleanUrl.startsWith('http'))cleanUrl='https://'+cleanUrl;
+    const u=new URL(cleanUrl);
+    // Remove intl-XX locale segment: ['intl-tr','artist','ID'] → ['artist','ID']
+    const parts=u.pathname.split('/').filter(Boolean)
+      .filter(p=>!p.startsWith('intl-'));
+    const validTypes=['playlist','album','track','artist','show','episode'];
+    let type='',id='';
+    for(let i=0;i<parts.length;i++){
+      if(validTypes.includes(parts[i])&&parts[i+1]){
+        type=parts[i];
+        // Strip query string from ID if any
+        id=parts[i+1].split('?')[0];
+        break;
+      }
+    }
+    if(!type||!id)return'';
+    const theme=document.body.classList.contains('light')?'1':'0';
+    return`https://open.spotify.com/embed/${type}/${id}?utm_source=generator&theme=${theme}`;
+  }catch(_e){return'';}
+}
+
+function mpGetCurrent(){
+  return CFG.playlist[CFG.mpIdx]||null;
+}
+/* ── YouTube embed error detection ── */
+function ytCheckErr(iframe){
+  // After load: if the iframe contains an error page YouTube shows a specific title
+  try{
+    // Try to access title — throws cross-origin error for normal pages (good, means it loaded)
+    const t=iframe.contentDocument?.title;
+    if(t&&(t.includes('Error')||t.includes('error')||t==='')){
+      showYtErr();return;
+    }
+    // If we CAN read contentDocument on a youtube page, something is wrong
+  }catch(e){
+    // Cross-origin block = normal YouTube page loaded fine
+    hideYtErr();return;
+  }
+  hideYtErr();
+}
+function showYtErr(){
+  const item=mpGetCurrent();
+  document.getElementById('yt-err').classList.add('show');
+  if(item){document.getElementById('yt-err-btn').dataset.url=item.url;}
+  // Also update message based on lang
+  const isLocal=location.protocol==='file:';
+  document.getElementById('yt-err-txt').innerHTML=
+    isLocal
+    ? 'Yerel dosyadan YouTube yüklenemiyor.<br>Lütfen server üzerinden aç: <b>localhost:7842</b>'
+    : 'Bu video gömülü oynatılamıyor.<br>YouTube kısıtlaması (Hata 153).';
+}
+function hideYtErr(){document.getElementById('yt-err').classList.remove('show');}
+function ytOpenOrig(){
+  const item=mpGetCurrent();
+  if(item?.url)window.open(item.url,'_blank');
+}
+function mpPlay(item){
+  if(!item)return;
+
+  const iframe=document.getElementById('mp-iframe');
+  const src=item.source==='soundcloud'?buildScEmbed(item.url):item.source==='spotify'?buildSpotifyEmbed(item.url):buildYtEmbed(item.url);
+  iframe.src=src||'';
+  const wrap=document.getElementById('mp-iframe-wrap');
+  const h=item.source==='soundcloud'?'160px':item.source==='spotify'?'160px':'195px';
+  const cls=item.source==='soundcloud'?'open-sc':item.source==='spotify'?'open-sp':'open-yt';
+  if(mpExpanded){wrap.className='mp-iframe-wrap '+cls;wrap.style.height=h;}
+  document.getElementById('mp-source-icon').textContent=item.source==='soundcloud'?'☁️':item.source==='spotify'?'🎧':'▶️';
+  document.getElementById('mp-title-lbl').textContent=item.name;
+  document.getElementById('mp-badge').textContent='▶';
+  document.getElementById('mp-pl-info').textContent=`${CFG.mpIdx+1}/${CFG.playlist.length} — ${item.name}`;
+  hideYtErr(); // Reset error overlay on track change
+  renderPlaylistSettings();
+}
+function mpPlayIndex(i){
+  CFG.mpIdx=i;save();mpPlay(mpGetCurrent());startRotateTimer();
+}
+function mpNext(){
+  if(!CFG.playlist.length)return;
+  CFG.mpIdx=(CFG.mpIdx+1)%CFG.playlist.length;
+  save();mpPlay(mpGetCurrent());
+}
+function mpPrev(){
+  if(!CFG.playlist.length)return;
+  CFG.mpIdx=(CFG.mpIdx-1+CFG.playlist.length)%CFG.playlist.length;
+  save();mpPlay(mpGetCurrent());
+}
+function startRotateTimer(){} // geçiş süresi kaldırıldı
+
+function stopRotateTimer(){if(mpRotateTimer){clearTimeout(mpRotateTimer);mpRotateTimer=null;}}
+
+function mpToggleExpand(){
+  mpExpanded=!mpExpanded;
+  const item=mpGetCurrent();
+  const wrap=document.getElementById('mp-iframe-wrap');
+  if(mpExpanded&&item){
+    wrap.className='mp-iframe-wrap '+(item.source==='soundcloud'?'open-sc':item.source==='spotify'?'open-sp':'open-yt');
+    wrap.style.height=item.source==='soundcloud'?'160px':item.source==='spotify'?'160px':'195px';
+    mpPlay(item);
+  }else{wrap.className='mp-iframe-wrap closed';wrap.style.height='0';}
+}
+function mpHide(){
+  document.getElementById('mp-widget').classList.add('hidden');
+  document.getElementById('mp-show-btn').style.display='flex';
+  document.getElementById('mp-iframe').src='';
+  stopRotateTimer();
+}
+function mpShow(){
+  document.getElementById('mp-widget').classList.remove('hidden');
+  document.getElementById('mp-show-btn').style.display='none';
+  mpPlay(mpGetCurrent());
+  startRotateTimer();
+}
+function mpInit(){
+  document.getElementById('mp-pl-bar').classList.remove('hidden');
+  document.getElementById('mp-pl-info').textContent=`${CFG.mpIdx+1}/${CFG.playlist.length} — ${mpGetCurrent()?.name||''}`;
+  document.getElementById('mp-source-icon').textContent=mpGetCurrent()?.source==='soundcloud'?'☁️':'▶️';
+  document.getElementById('mp-title-lbl').textContent=mpGetCurrent()?.name||'Music';
+  // Start collapsed — icon visible
+  document.getElementById('mp-show-btn').style.display='flex';
+  document.getElementById('mp-widget').classList.add('hidden');
+}
+
+/* ── DATA ── */
+function exportData(){
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(new Blob([JSON.stringify({DB,CFG},null,2)],{type:'application/json'}));
+  a.download='art3mis-backup.json';a.click();notify(t('exported'),'ok');
+}
+function importData(inp){
+  const f=inp.files[0];if(!f)return;
+  const r=new FileReader();
+  r.onload=e=>{
+    try{const p=JSON.parse(e.target.result);
+      if(p.DB)DB=p.DB;if(p.CFG)CFG={...CFG,...p.CFG};
+      save();applyConfig();applyLang();renderAll();renderPlaylistSettings();notify(t('imported'),'ok');}
+    catch{notify(t('invalidFile'),'err');}};
+  r.readAsText(f);
+}
+function clearAll(){
+  if(!confirm(t('confirmClear')))return;
+  DB={games:[],shortcuts:[]};save();renderAll();notify(t('clearAll'),'err');
+}
+
+/* ── NOTIFY ── */
+function notify(msg,type='info'){
+  const icons={ok:'✓',err:'✕',info:'ℹ'};
+  const n=document.createElement('div');n.className='notif '+type;
+  n.textContent=(icons[type]||'ℹ')+' '+msg;
+  document.getElementById('ntf').appendChild(n);
+  setTimeout(()=>n.remove(),3100);
+}
+
+/* ── HELPERS ── */
+function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+
+/* ── KEYBOARD ── */
+document.addEventListener('keydown',e=>{
+  if((e.ctrlKey||e.metaKey)&&e.key==='f'){e.preventDefault();toggleSearch();}
+  if((e.ctrlKey||e.metaKey)&&e.key==='d'){e.preventDefault();toggleTheme();}
+});
+
+init();
+</script>
+<style>@keyframes spin{to{transform:rotate(360deg)}}</style>
+</body>
+</html>
