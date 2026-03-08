@@ -27,7 +27,7 @@
 
 <img src="screenshots/Screenshot 2026-03-08 215347.png" width="32%" alt="ART3MIS – Game Library"/>
 <img src="screenshots/Screenshot 2026-03-08 215408.png" width="32%" alt="ART3MIS – Settings & Themes"/>
-<img src="screenshots/Screenshot 2026-03-08 225720.png" width="32%" alt="ART3MIS – Light Mode"/>
+<img src="screenshots/Screenshot 2026-03-08 215437.png" width="32%" alt="ART3MIS – Light Mode"/>
 
 </div>
 
@@ -61,10 +61,10 @@ Every theme comes as a matched pair: one dark, one light. The 🌙/☀️ toggle
 
 | Theme | Dark Mode | Light Mode |
 |---|---|---|
-| 🔵 **CYBER** | Deep navy, cyan neon accents | Clean sky blue and white |
-| 💚 **TERMINAL** | Black canvas, phosphor green | Cream paper, olive green ink |
-| 🟣 **AURORA** | Deep cosmic violet | Soft lavender, spring blossom |
-| ⚪ **MINIMAL** | Dark slate, muted grey | Warm cream, stone beige |
+| 🔵 **CYBER** | `#070d1a` deep navy · `#00d4ff` cyan neon | `#e8f4fd` sky white · `#0077cc` blue |
+| 💚 **TERMINAL** | `#040d04` black · `#00ff41` phosphor green | `#f5f0e8` cream paper · `#5a7a20` olive |
+| 🟣 **AURORA** | `#07060f` cosmic black · `#a855f7` violet | `#f2eeff` lavender · `#8833cc` deep purple |
+| ⚪ **MINIMAL** | `#0f1117` dark slate · `#8fa3c8` ice blue | `#7a9abf` steel blue · `#3b7ff8` bright blue |
 
 ### ✨ Particle Effects
 
@@ -252,10 +252,10 @@ Her tema eşleştirilmiş bir çift olarak gelir: biri koyu, biri açık. Header
 
 | Tema | Gece Modu | Gündüz Modu |
 |---|---|---|
-| 🔵 **CYBER** | Derin lacivert, cyan neon | Temiz açık mavi ve beyaz |
-| 💚 **TERMINAL** | Siyah zemin, fosforlu yeşil | Krem kağıt, zeytin yeşili |
-| 🟣 **AURORA** | Derin kozmik mor | Yumuşak lavanta, bahar renkleri |
-| ⚪ **MINIMAL** | Koyu slate, soluk gri | Sıcak krem, taş beji |
+| 🔵 **CYBER** | `#070d1a` derin lacivert · `#00d4ff` cyan neon | `#e8f4fd` açık gökyüzü · `#0077cc` mavi |
+| 💚 **TERMINAL** | `#040d04` siyah · `#00ff41` fosforlu yeşil | `#f5f0e8` krem kağıt · `#5a7a20` zeytin yeşili |
+| 🟣 **AURORA** | `#07060f` kozmik siyah · `#a855f7` violet | `#f2eeff` lavanta · `#8833cc` derin mor |
+| ⚪ **MINIMAL** | `#0f1117` koyu slate · `#8fa3c8` buz mavisi | `#7a9abf` çelik mavisi · `#3b7ff8` parlak mavi |
 
 ### ✨ Parçacık Efektleri
 
