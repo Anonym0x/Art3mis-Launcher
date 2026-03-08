@@ -111,14 +111,14 @@
 }
 /* ── MINIMAL LIGHT ─ PEBBLE: Krem/gri, temiz ve nötr ── */
 .theme-minimal.light{
-  --bg:#f0ede8;--surf:rgba(255,253,250,.97);--surf2:rgba(240,236,230,.88);
-  --brd:rgba(100,90,80,.14);--brd-hi:rgba(100,90,80,.34);
-  --A:#556677;--A2:#885544;--A3:#446655;
-  --txt:#1a1510;--dim:rgba(80,70,60,.50);
+  --bg:#7A9ABF;--surf:rgba(230,245,252,.97);--surf2:rgba(220,228,240,.88);
+  --brd:rgba(110,130,165,.18);--brd-hi:rgba(110,130,165,.42);
+  --A:#3b7ff8;--A2:#7A9ABF;--A3:#4a6d94;
+  --txt:#1a2233;--dim:rgba(60,80,115,.52);
   --glow:none;
-  --card:rgba(248,246,242,.98);--inp:rgba(228,224,216,.55);
-  --ok:#336633;--danger:#885544;
-  --modal:rgba(252,250,248,.99);--sh:0 4px 16px rgba(40,30,20,.10);
+  --card:rgba(240,245,252,.98);--inp:rgba(210,220,236,.60);
+  --ok:#3a6e55;--danger:#7a4455;
+  --modal:rgba(244,248,254,.99);--sh:0 4px 16px rgba(30,50,90,.10);
 }
 .theme-minimal.light .ibtn:hover,.theme-minimal.light .pscard:hover,
 .theme-minimal.light .addbtn:hover{transform:none!important;}
@@ -128,7 +128,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(
 
 #particles{position:fixed;inset:0;z-index:3;pointer-events:none;}
 #bgimg{position:fixed;inset:0;z-index:1;background-size:cover;background-position:center;opacity:0;transition:opacity .5s;}
-#bgdim{position:fixed;inset:0;z-index:2;background:var(--bg);opacity:.80;pointer-events:none;transition:opacity .3s,background .4s;}
+#bgdim{position:fixed;inset:0;z-index:2;background:var(--bg);opacity:.80;pointer-events:none;transition:opacity .3s,background .4s,backdrop-filter .3s;}
 #app{position:relative;z-index:4;height:100vh;display:flex;flex-direction:column;}
 
 /* HEADER */
@@ -153,20 +153,20 @@ header{display:flex;align-items:center;justify-content:space-between;padding:12p
 .sbar{display:flex;gap:16px;flex-wrap:wrap;padding:7px 28px;background:var(--surf);
   border-bottom:1px solid var(--brd);backdrop-filter:blur(24px);flex-shrink:0;}
 .stat{display:flex;align-items:center;gap:6px;}
-.sl{font-family:'Space Mono',monospace;font-size:.55rem;color:var(--dim);text-transform:uppercase;letter-spacing:.1em;}
-.sv{font-family:'Orbitron',monospace;font-size:.76rem;font-weight:700;color:var(--A);}
+.sl{font-family:'Space Mono',monospace;font-size:.68rem;font-weight:700;color:var(--dim);text-transform:uppercase;letter-spacing:.08em;}
+.sv{font-family:'Orbitron',monospace;font-size:.92rem;font-weight:700;color:var(--A);}
 .ssep{width:1px;height:14px;background:var(--brd);}
 
 /* TABS */
 .tabs{display:flex;padding:0 28px;background:var(--surf);border-bottom:1px solid var(--brd);
   backdrop-filter:blur(24px);flex-shrink:0;overflow-x:auto;}
-.tab{padding:10px 18px;font-family:'Orbitron',monospace;font-size:.65rem;font-weight:700;
-  letter-spacing:.1em;color:var(--dim);cursor:pointer;border-bottom:2px solid transparent;
+.tab{padding:11px 20px;font-family:'Orbitron',monospace;font-size:.8rem;font-weight:900;
+  letter-spacing:.12em;color:var(--dim);cursor:pointer;border-bottom:2px solid transparent;
   transition:all .22s;display:flex;align-items:center;gap:6px;white-space:nowrap;}
 .tab:hover{color:var(--txt);}
 .tab.on{color:var(--A);border-bottom-color:var(--A);}
 .tcnt{background:rgba(0,212,255,.1);border:1px solid var(--brd);border-radius:20px;
-  padding:1px 6px;font-size:.56rem;color:var(--A);}
+  padding:2px 7px;font-size:.65rem;font-weight:700;color:var(--A);}
 
 /* CONTENT */
 .content{flex:1;overflow-y:auto;padding:22px 28px;}
@@ -175,7 +175,18 @@ header{display:flex;align-items:center;justify-content:space-between;padding:12p
 @keyframes fu{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
 
 /* SECTION HEADER */
-.sechdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;}
+
+/* ── SORT BAR ── */
+.sort-bar{display:flex;align-items:center;gap:4px;}
+.sort-btn{display:flex;align-items:center;gap:3px;padding:3px 7px;
+  background:var(--surf2);border:1px solid var(--brd);border-radius:6px;
+  color:var(--dim);font-family:'Space Mono',monospace;font-size:.52rem;
+  cursor:pointer;transition:all .15s;white-space:nowrap;user-select:none;}
+.sort-btn:hover{border-color:var(--A);color:var(--A);}
+.sort-btn.active{background:linear-gradient(135deg,rgba(0,212,255,.15),rgba(124,47,255,.15));
+  border-color:var(--A);color:var(--A);}
+.sort-sep{width:1px;height:14px;background:var(--brd);margin:0 2px;}
+.sechdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;flex-wrap:wrap;gap:8px;}
 .sectit{font-family:'Orbitron',monospace;font-size:.85rem;font-weight:700;
   letter-spacing:.1em;display:flex;align-items:center;gap:8px;}
 .sectit::before{content:'';display:inline-block;width:3px;height:16px;
@@ -546,7 +557,16 @@ header{display:flex;align-items:center;justify-content:space-between;padding:12p
         <input class="srch" id="q-games" oninput="filter('games',this.value)">
       </div>
       <div class="sechdr">
-        <div class="sectit" data-t="gameLib"></div>
+        <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+          <div class="sectit" data-t="gameLib"></div>
+          <div class="sort-bar" id="game-sort-bar">
+            <div class="sort-btn active" id="sb-date_desc" onclick="setGameSort('date_desc')" title="En son eklenen">🕐↓</div>
+            <div class="sort-btn" id="sb-date_asc" onclick="setGameSort('date_asc')" title="En eski eklenen">🕐↑</div>
+            <div class="sort-sep"></div>
+            <div class="sort-btn" id="sb-name_asc" onclick="setGameSort('name_asc')" title="İsim A→Z">A↑</div>
+            <div class="sort-btn" id="sb-name_desc" onclick="setGameSort('name_desc')" title="İsim Z→A">A↓</div>
+          </div>
+        </div>
         <button class="addbtn" onclick="openModal('game')">＋ <span data-t="addGame"></span></button>
       </div>
       <div class="grid" id="grid-games"></div>
@@ -713,6 +733,19 @@ header{display:flex;align-items:center;justify-content:space-between;padding:12p
         </div>
       </div>
 
+        <!-- Font Boyutu -->
+        <div class="srow">
+          <div>
+            <div class="sname">🔤 <span data-t="fontScale"></span></div>
+            <div class="sdesc" data-t="fontScaleDesc"></div>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px">
+            <span id="fslbl" style="font-family:'Space Mono',monospace;font-size:.63rem;color:var(--A);min-width:36px;text-align:right">+0px</span>
+            <input type="range" min="0" max="36" value="0" id="fsslider"
+              oninput="setFontScale(+this.value)" style="width:95px;accent-color:var(--A)">
+          </div>
+        </div>
+
       <!-- 2. ARKAPLAN -->
       <div class="ss">
         <div class="sslbl" data-t="catBackground"></div>
@@ -733,8 +766,13 @@ header{display:flex;align-items:center;justify-content:space-between;padding:12p
         </div>
         <div class="fg">
           <label class="fl"><span data-t="dimming"></span> (<span id="oplbl">80</span>%)</label>
-          <input type="range" min="0" max="97" value="80" id="opslider"
+          <input type="range" min="0" max="100" value="80" id="opslider"
             oninput="setOpacity(+this.value)" style="width:100%;accent-color:var(--A);margin-top:3px">
+        </div>
+        <div class="fg">
+          <label class="fl">🎨 <span data-t="bgTint"></span> (<span id="tintlbl">0</span>%)</label>
+          <input type="range" min="0" max="80" value="0" id="tintslider"
+            oninput="setBgTint(+this.value)" style="width:100%;accent-color:var(--A);margin-top:3px">
         </div>
       </div>
 
@@ -767,7 +805,7 @@ header{display:flex;align-items:center;justify-content:space-between;padding:12p
             <div class="sname" data-t="serverStatus"></div>
             <div class="sdesc" id="srv-desc">localhost:7842</div>
           </div>
-          <button class="obtn" style="padding:6px 12px;font-size:.78rem;flex:unset" onclick="pingServer()" data-t="ping"></button>
+          <button class="obtn" style="padding:9px 15px;font-size:.78rem;flex:unset" onclick="pingServer()" data-t="ping"></button>
         </div>
       </div>
 
@@ -989,6 +1027,7 @@ const LANG={
     noGames:'Oyun Yok',noGamesSub:'"Oyun Ekle" ile kütüphane oluşturun.',
     noShortcuts:'Kısayol Yok',noShortcutsSub:'Dosya yöneticisinden veya manuel kısayol ekleyin.',
     catAppearance:'🎨 Görünüm',catBackground:'🖼 Arkaplan',catMusic:'Müzik Oynatıcı',
+    fontScale:'Yazı Boyutu',fontScaleDesc:'Arayüz yazı boyutunu büyüt (varsayılan + 0-120px)',
     catServer:'🔌 Python Server',catData:'💾 Veri Yönetimi',
     nightMode:'Gece Modu',nightModeDesc:'Koyu renk teması',
     particles:'Parçacık Efekti',particlesDesc:'Animasyonlu arka plan',
@@ -1045,6 +1084,7 @@ const LANG={
     noGames:'No Games',noGamesSub:'Add your first game with "Add Game".',
     noShortcuts:'No Shortcuts',noShortcutsSub:'Add shortcuts from file manager or manually.',
     catAppearance:'🎨 Appearance',catBackground:'🖼 Background',catMusic:'Music Player',
+    fontScale:'Font Size',fontScaleDesc:'Increase UI font size (default + 0-120px)',
     catServer:'🔌 Python Server',catData:'💾 Data Management',
     nightMode:'Night Mode',nightModeDesc:'Dark color theme',
     particles:'Particle Effect',particlesDesc:'Animated background',
@@ -1190,7 +1230,8 @@ let CFG={
     {id:'1',name:'Spotify Sanatçı 🎧',url:'https://open.spotify.com/intl-tr/artist/6fOMl44jA4Sp5b9PpYCkzz?si=6EvVbshCTDSIxyTSrwFjVg',source:'spotify'},
     {id:'2',name:'NF',url:'https://soundcloud.com/user-698908671/sets/nf',source:'soundcloud'}
   ],
-  mpIdx:0,mpLoop:false,mpAutoRotate:true
+  mpIdx:0,mpLoop:false,mpAutoRotate:true,
+  gameSort:'date_desc',fontScale:0,bgTint:0
 };
 let ctxTarget=null,searchOn=false,curTab='games';
 let editMode={type:null,index:-1};
@@ -1283,10 +1324,22 @@ function applyConfig(){
   document.getElementById('bgdim').style.opacity=CFG.opacity/100;
   document.getElementById('opslider').value=CFG.opacity;
   document.getElementById('oplbl').textContent=CFG.opacity;
+  // Font scale
+  document.documentElement.style.fontSize=(18+(CFG.fontScale||0))+'px';
+  const fsEl=document.getElementById('fsslider');
+  const fsLbl=document.getElementById('fslbl');
+  if(fsEl)fsEl.value=CFG.fontScale||0;
+  if(fsLbl)fsLbl.textContent='+'+(CFG.fontScale||0)+'px';
+  // Sort buttons
+  ['date_desc','date_asc','name_asc','name_desc'].forEach(k=>{
+    const el=document.getElementById('sb-'+k);
+    if(el)el.classList.toggle('active',k===(CFG.gameSort||'date_desc'));
+  });
 }
 function toggleTheme(){CFG.dark=!CFG.dark;applyConfig();save();}
 function toggleParticles(){CFG.particles=!CFG.particles;applyConfig();save();}
 function setPC(n){CFG.pcount=n;document.getElementById('pclbl').textContent=n;if(CFG.particles)Particles.setCount(n);save();}
+function setFontScale(n){CFG.fontScale=n;document.documentElement.style.fontSize=(16+n)+'px';const l=document.getElementById('fslbl');if(l)l.textContent='+'+(n)+'px';save();}
 function setParticleStyle(s){
   CFG.pstyle=s;
   ['stardust','milkyway','classic','fireflies'].forEach(id=>{document.getElementById('ps-'+id).classList.toggle('active',id===s);});
@@ -1298,6 +1351,8 @@ function setUITheme(t){
   CFG.uiTheme=t;
   applyConfig();save();
   notify('🎨 Tema: '+t.toUpperCase(),'info');
+  // Re-apply tint with new theme color
+  setTimeout(applyBgTint,50);
 }
 function toggleParticleMouse(){
   CFG.particlesMouse=!(CFG.particlesMouse!==false);
@@ -1335,6 +1390,37 @@ function pickBgFile(inp){const f=inp.files[0];if(!f)return;const r=new FileReade
 function setBgUrl(){const u=document.getElementById('bgurl').value.trim();if(!u)return;CFG.bgUrl=u;applyConfig();save();notify(t('bgUpdated'),'ok');}
 function clearBg(){CFG.bgUrl='';applyConfig();save();notify(t('bgCleared'),'info');}
 function setOpacity(v){CFG.opacity=v;document.getElementById('bgdim').style.opacity=v/100;document.getElementById('oplbl').textContent=v;save();}
+function setBgTint(v){
+  CFG.bgTint=v;
+  document.getElementById('tintlbl').textContent=v;
+  applyBgTint();
+  save();
+}
+function applyBgTint(){
+  const dim=document.getElementById('bgdim');
+  if(!dim)return;
+  const v=CFG.bgTint||0;
+  if(v===0){
+    // Pure theme bg color, no tint
+    dim.style.background='var(--bg)';
+    return;
+  }
+  // Extract --A color from current theme using getComputedStyle
+  const A=getComputedStyle(document.documentElement).getPropertyValue('--A').trim()||
+           getComputedStyle(document.body).getPropertyValue('--A').trim();
+  // Build rgba from CSS var — use a temp element to resolve it
+  const tmp=document.createElement('div');
+  tmp.style.cssText=`position:fixed;opacity:0;background:${A}`;
+  document.body.appendChild(tmp);
+  const raw=getComputedStyle(tmp).backgroundColor; // "rgb(r, g, b)"
+  document.body.removeChild(tmp);
+  // Parse r,g,b
+  const m=raw.match(/\d+/g);
+  if(!m||m.length<3){dim.style.background='var(--bg)';return;}
+  const [r,g,b]=m;
+  const alpha=(v/100)*0.55; // max ~55% tint so bg always visible
+  dim.style.background=`rgba(${r},${g},${b},${alpha})`;
+}
 
 /* ── SEARCH ── */
 function toggleSearch(){
@@ -1608,11 +1694,28 @@ function updateStats(){
   document.getElementById('cs').textContent=DB.shortcuts.length;
 }
 
+function setGameSort(s){
+  CFG.gameSort=s;
+  ['date_desc','date_asc','name_asc','name_desc'].forEach(k=>{
+    const el=document.getElementById('sb-'+k);
+    if(el)el.classList.toggle('active',k===s);
+  });
+  save();renderGames();
+}
+
 function renderGames(){
   const g=document.getElementById('grid-games'),e=document.getElementById('em-games');
   g.innerHTML='';
   if(!DB.games.length){e.style.display='flex';return;}e.style.display='none';
-  DB.games.forEach((gm,i)=>{
+  // Sort a copy with original index preserved
+  const sorted=DB.games.map((gm,i)=>({gm,i})).sort((a,b)=>{
+    const s=CFG.gameSort||'date_desc';
+    if(s==='name_asc')return a.gm.name.localeCompare(b.gm.name,'tr');
+    if(s==='name_desc')return b.gm.name.localeCompare(a.gm.name,'tr');
+    if(s==='date_asc')return (a.gm.addedAt||a.i)-(b.gm.addedAt||b.i);
+    return (b.gm.addedAt||b.i*1e12)-(a.gm.addedAt||a.i*1e12); // date_desc default
+  });
+  sorted.forEach(({gm,i})=>{
     const d=document.createElement('div');d.className='card';d.dataset.name=gm.name;
     const img=gm.img
       ?`<img src="${esc(gm.img)}" loading="lazy" style="width:100%;aspect-ratio:3/4;object-fit:cover;display:block"
@@ -1809,8 +1912,8 @@ function saveGame(){
   const name=document.getElementById('gname').value.trim();
   if(!name){notify(t('gameName')+' '+t('required'),'err');return;}
   const obj={name,path:document.getElementById('gpath').value.trim(),genre:document.getElementById('ggenre').value.trim(),year:document.getElementById('gyear').value.trim(),img:document.getElementById('gimg').value.trim(),icon:document.getElementById('gicon').value.trim()||'🎮'};
-  if(editMode.type==='game'&&editMode.index>=0){DB.games[editMode.index]=obj;save();renderAll();closeModal('game');notify(`"${name}" ${t('saved')}`,'ok');}
-  else{DB.games.push(obj);save();renderAll();closeModal('game');notify(`"${name}" ${t('added')}`,'ok');}
+  if(editMode.type==='game'&&editMode.index>=0){DB.games[editMode.index]={...obj,addedAt:DB.games[editMode.index].addedAt||Date.now()};save();renderAll();closeModal('game');notify(`"${name}" ${t('saved')}`,'ok');}
+  else{obj.addedAt=Date.now();DB.games.push(obj);save();renderAll();closeModal('game');notify(`"${name}" ${t('added')}`,'ok');}
 }
 
 /* ── SAVE SHORTCUT ── */
