@@ -2,14 +2,14 @@
 ART3MIS Launcher - Python Server v3
 ======================================
 Endpoints:
-  /open?path=...        -> Open a file / folder / program 
-  /pick-file            -> Native file picker (tkinter)
-  /pick-folder          -> Native folder picker (tkinter)
-  /list-folder?path=... -> Folder content (name, size, date)
-  /drives               -> Windows drives list (C:, D: ...)
-  /ping                 -> Server check
+  /open?path=...        -> Dosya / klasor / program ac
+  /pick-file            -> Native dosya secici (tkinter)
+  /pick-folder          -> Native klasor secici (tkinter)
+  /list-folder?path=... -> Klasor icerigi (isim, boyut, tarih)
+  /drives               -> Windows surucü listesi (C:, D: ...)
+  /ping                 -> Server saglik kontrolu
 
-STARTING: start.bat  or  python server.py
+BASLATMA: start.bat  veya  python server.py
 """
 
 import http.server, urllib.parse, subprocess
@@ -113,7 +113,7 @@ class Handler(http.server.BaseHTTPRequestHandler):
         except Exception:
             data = {}
 
-        # /browse — folder or file picker (mode: 'folder' or 'file')
+        # /browse — klasör veya dosya seçici (mode: 'folder' veya 'file')
         if p.path == '/browse':
             if not HAS_TK:
                 return self._json(200, {'ok': False, 'error': 'tkinter yok'})
@@ -134,7 +134,7 @@ class Handler(http.server.BaseHTTPRequestHandler):
         p = urllib.parse.urlparse(self.path)
         q = urllib.parse.parse_qs(p.query)
 
-        # / or /index.html → launcher.html service
+        # / veya /index.html → launcher.html servis et
         if p.path in ("/", "/index.html", "/launcher.html"):
             if not HTML_FILE.exists():
                 self.send_response(404); self._cors(); self.end_headers()
@@ -230,7 +230,7 @@ class Handler(http.server.BaseHTTPRequestHandler):
         elif p.path == "/ping":
             self._json(200, {"ok": True, "platform": sys.platform, "tk": HAS_TK, "ver": "3.1"})
 
-        # IGNORE THIS ONE :D /file?path=... — yerel ses dosyasi servis eder (MP3, FLAC, OGG, WAV, M4A vb.)
+        # /file?path=... — yerel ses dosyasi servis eder (MP3, FLAC, OGG, WAV, M4A vb.)
         elif p.path == "/file":
             raw = q.get("path", [None])[0]
             if not raw:
@@ -312,13 +312,13 @@ class Handler(http.server.BaseHTTPRequestHandler):
 
 def _open_browser():
     time.sleep(1.2)
-    # Always open localhost:7842 — not file:// !
-    # If it opens with file:// server features won't work
+    # Her zaman localhost:7842 aç — file:// değil!
+    # file:// ile açılırsa server özellikleri çalışmaz
     webbrowser.open(f"http://localhost:{PORT}")
 
 
 def main():
-    srv = http.server.HTTPServer(("0.0.0.0", PORT), Handler)
+    srv = http.server.ThreadingHTTPServer(("0.0.0.0", PORT), Handler)
     # Windows CMD encoding fix — UTF-8 output
     if sys.platform == "win32":
         try:
@@ -328,35 +328,67 @@ def main():
         except Exception:
             pass
 
-    tk_status = "FOUND / MEVCUT" if HAS_TK else "MISSING / YOK"
-    print()
-    print("  +===========================================+")
-    print("  |                                           |")
-    print("  |         ART3MIS  Launcher  v3.1          |")
-    print("  |                                           |")
-    print(f"  |   Server    ->  localhost:{PORT}            |")
-    print(f"  |   Platform  ->  {sys.platform:<26}|")
-    print(f"  |   Tkinter   ->  {tk_status:<26}|")
-    print("  |                                           |")
-    print("  +===========================================+")
-    print()
-    print("  [ EN ]  Server is running.")
-    print("  [ EN ]  Opening browser in 1 second...")
-    print("  [ EN ]  Press Ctrl+C to stop.")
-    print()
-    print("  [ TR ]  Sunucu baslatildi.")
-    print("  [ TR ]  Tarayici 1 saniye sonra aciliyor...")
-    print("  [ TR ]  Durdurmak icin Ctrl+C")
-    print()
-    print("  -------------------------------------------")
-    print()
+    # Sistem dilini tespit et (modül seviyesinde IS_TR değişkeni kullanılır)
+    if IS_TR:
+        tk_status = "MEVCUT" if HAS_TK else "YOK"
+        print()
+        print("  +===========================================+")
+        print("  |                                           |")
+        print("  |         ART3MIS  Launcher  v3.1          |")
+        print("  |                                           |")
+        print(f"  |   Sunucu    ->  localhost:{PORT}            |")
+        print(f"  |   Platform  ->  {sys.platform:<26}|")
+        print(f"  |   Tkinter   ->  {tk_status:<26}|")
+        print("  |                                           |")
+        print("  +===========================================+")
+        print()
+        print("  Sunucu baslatildi.")
+        print("  Tarayici 1 saniye sonra aciliyor...")
+        print("  Durdurmak icin Ctrl+C")
+        print()
+        print("  -------------------------------------------")
+        print()
+    else:
+        tk_status = "FOUND" if HAS_TK else "MISSING"
+        print()
+        print("  |                                           |")
+        print("  |         ART3MIS  Launcher  v3.1          |")
+        print("  |                                           |")
+        print(f"  |   Server    ->  localhost:{PORT}            |")
+        print(f"  |   Platform  ->  {sys.platform:<26}|")
+        print(f"  |   Tkinter   ->  {tk_status:<26}|")
+        print("  |                                           |")
+        print("  +===========================================+")
+        print()
+        print("  Server is running.")
+        print("  Opening browser in 1 second...")
+        print("  Press Ctrl+C to stop.")
+        print()
+        print("  -------------------------------------------")
+        print()
     threading.Thread(target=lambda: srv.serve_forever(), daemon=True).start()
     threading.Thread(target=_open_browser, daemon=True).start()
     _dialog_worker()
+
+
+# Sistem dilini modül seviyesinde tespit et
+_lang_env = os.environ.get("LANG", os.environ.get("LANGUAGE", "")).lower()
+if sys.platform == "win32":
+    try:
+        import ctypes as _ctypes
+        _lcid = _ctypes.windll.kernel32.GetUserDefaultUILanguage()
+        IS_TR = (_lcid & 0xFF) == 0x1F
+    except Exception:
+        IS_TR = "tr" in _lang_env
+else:
+    IS_TR = _lang_env.startswith("tr")
 
 
 if __name__ == "__main__":
     try:
         main()
     except KeyboardInterrupt:
-        print("\n  [ EN ] Server stopped. / [ TR ] Sunucu durduruldu.\n")
+        if IS_TR:
+            print("\n  Sunucu durduruldu.\n")
+        else:
+            print("\n  Server stopped.\n")
