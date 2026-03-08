@@ -106,8 +106,8 @@ Drop any image — from a local file or a URL. A dimming slider lets you control
 
 ```
 art3mis-launcher/
-├── launcher.html   ← Everything: UI, logic, styles. ~2100 lines.
-└── server.py       ← Python HTTP server. ~300 lines.
+├── launcher.html   ← Everything: UI, logic, styles. ~2200 lines.
+└── server.py       ← Python HTTP server. ~400 lines.
 ```
 
 The two files talk over HTTP on `localhost:7842`. The HTML file is served by the Python server — so you always open `http://localhost:7842`, never `file://`.
