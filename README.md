@@ -27,7 +27,7 @@
 
 <img src="screenshots/Screenshot 2026-03-08 215347.png" width="32%" alt="ART3MIS – Game Library"/>
 <img src="screenshots/Screenshot 2026-03-08 215408.png" width="32%" alt="ART3MIS – Settings & Themes"/>
-<img src="screenshots/Screenshot 2026-03-08 215437.png" width="32%" alt="ART3MIS – Light Mode"/>
+<img src="screenshots/Screenshot 2026-03-08 225720.png" width="32%" alt="ART3MIS – Light Mode"/>
 
 </div>
 
