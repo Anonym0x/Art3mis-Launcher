@@ -318,7 +318,7 @@ def _open_browser():
 
 
 def main():
-    srv = http.server.HTTPServer(("localhost", PORT), Handler)
+    srv = http.server.HTTPServer(("0.0.0.0", PORT), Handler)
     # Windows CMD encoding fix — UTF-8 output
     if sys.platform == "win32":
         try:
