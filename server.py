@@ -2,14 +2,14 @@
 ART3MIS Launcher - Python Server v3
 ======================================
 Endpoints:
-  /open?path=...        -> Dosya / klasor / program ac
-  /pick-file            -> Native dosya secici (tkinter)
-  /pick-folder          -> Native klasor secici (tkinter)
-  /list-folder?path=... -> Klasor icerigi (isim, boyut, tarih)
-  /drives               -> Windows surucü listesi (C:, D: ...)
-  /ping                 -> Server saglik kontrolu
+  /open?path=...        -> Open a file / folder / program 
+  /pick-file            -> Native file picker (tkinter)
+  /pick-folder          -> Native folder picker (tkinter)
+  /list-folder?path=... -> Folder content (name, size, date)
+  /drives               -> Windows drives list (C:, D: ...)
+  /ping                 -> Server check
 
-BASLATMA: start.bat  veya  python server.py
+STARTING: start.bat  or  python server.py
 """
 
 import http.server, urllib.parse, subprocess
@@ -113,7 +113,7 @@ class Handler(http.server.BaseHTTPRequestHandler):
         except Exception:
             data = {}
 
-        # /browse — klasör veya dosya seçici (mode: 'folder' veya 'file')
+        # /browse — folder or file picker (mode: 'folder' or 'file')
         if p.path == '/browse':
             if not HAS_TK:
                 return self._json(200, {'ok': False, 'error': 'tkinter yok'})
@@ -134,7 +134,7 @@ class Handler(http.server.BaseHTTPRequestHandler):
         p = urllib.parse.urlparse(self.path)
         q = urllib.parse.parse_qs(p.query)
 
-        # / veya /index.html → launcher.html servis et
+        # / or /index.html → launcher.html service
         if p.path in ("/", "/index.html", "/launcher.html"):
             if not HTML_FILE.exists():
                 self.send_response(404); self._cors(); self.end_headers()
@@ -230,7 +230,7 @@ class Handler(http.server.BaseHTTPRequestHandler):
         elif p.path == "/ping":
             self._json(200, {"ok": True, "platform": sys.platform, "tk": HAS_TK, "ver": "3.1"})
 
-        # /file?path=... — yerel ses dosyasi servis eder (MP3, FLAC, OGG, WAV, M4A vb.)
+        # IGNORE THIS ONE :D /file?path=... — yerel ses dosyasi servis eder (MP3, FLAC, OGG, WAV, M4A vb.)
         elif p.path == "/file":
             raw = q.get("path", [None])[0]
             if not raw:
@@ -312,8 +312,8 @@ class Handler(http.server.BaseHTTPRequestHandler):
 
 def _open_browser():
     time.sleep(1.2)
-    # Her zaman localhost:7842 aç — file:// değil!
-    # file:// ile açılırsa server özellikleri çalışmaz
+    # Always open localhost:7842 — not file:// !
+    # If it opens with file:// server features won't work
     webbrowser.open(f"http://localhost:{PORT}")
 
 
